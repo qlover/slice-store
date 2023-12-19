@@ -1,6 +1,6 @@
 import { lstatSync, readdirSync, rmdirSync, statSync, unlinkSync } from 'fs'
 import { execSync } from 'child_process'
-import { extname, basename } from 'path'
+import { extname, basename } from 'node:path'
 
 /**
  * 获取执行该方法时所在的目录
