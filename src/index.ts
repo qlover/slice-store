@@ -1,5 +1,3 @@
-const write = () => {
-  console.log('src root')
-}
+import { env } from 'config/app.config';
 
-write()
+console.log('src env', env);
