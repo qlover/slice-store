@@ -5,7 +5,7 @@
   "type": "module",
   "main": "dist/index.js",
   "files": [
-    "src"
+    "dist"
   ],
   "scripts": {
     "dev": "npx tsc --watch",
@@ -22,7 +22,7 @@
     "eslint:work": "eslint packages/_work --ext .js --cache --fix",
     "setup:husky": "node packages/_work/bin/setupHusky",
     "commit": "node ./packages/_work/bin/commit.js",
-    "release": "release-it",
+    "release": "npm login && release-it",
     "ts-run": "node ./packages/_work/bin/ts-run.js",
     "test": "jest"
   },
