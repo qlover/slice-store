@@ -1,5 +1,12 @@
 
 
+## [1.0.2](https://github.com/qlover/slice-store/compare/1.0.1...1.0.2) (2024-01-09)
+
+
+### Features
+
+* **core:** add core and react ([d8d816d](https://github.com/qlover/slice-store/commit/d8d816df06523f576da6b2e875f9d0bdfafbd23b))
+
 ## 1.0.1 (2023-12-08)
 
 
