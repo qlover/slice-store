@@ -30,7 +30,7 @@ export default defineConfig([
     outDir: 'dist/react',
     platform: 'neutral',
     globalName: 'fy',
-    noExternal: ['react'],
+    external: ['react'],
     outExtension({ format }) {
       if (format === 'iife') return { js: '.main.js' };
       return { js: `.${format}.js` };
