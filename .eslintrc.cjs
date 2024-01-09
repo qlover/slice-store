@@ -14,10 +14,15 @@ module.exports = {
       ...require('./packages/_work/eslintrc.json'),
       files: ['./packages/_work/*.js']
     },
-    // src root
+    // core
     {
       ...require('./config/eslint/eslintrc.base.json'),
-      files: ['./src/*.js', './src/*.ts']
+      files: ['./packages/core/*.js', './packages/core/*.ts']
+    },
+    // react
+    {
+      ...require('./config/eslint/eslintrc.base.json'),
+      files: ['./packages/react/*.js', './packages/react/*.ts']
     }
   ],
   parserOptions: {
@@ -26,4 +31,4 @@ module.exports = {
     project: ['./tsconfig.json'],
     tsconfigRootDir: __dirname
   }
-}
+};

@@ -28,6 +28,6 @@
     "experimentalSpecifierResolution": "node",
     "transpileOnly": true
   },
-  "include": ["./src"],
+  "include": ["./src", "packages/core", "packages/react"],
   "exclude": ["node_modules", "packages/_work"]
 }
