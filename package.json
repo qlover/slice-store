@@ -3,6 +3,7 @@
   "version": "1.0.1",
   "description": "",
   "type": "module",
+  "private": true,
   "main": "dist/index.js",
   "files": [
     "src"
@@ -60,6 +61,7 @@
     "cross-env": "^7.0.3",
     "gulp": "^4.0.2",
     "ts-jest": "^29.1.1",
-    "typescript": "*"
+    "typescript": "*",
+    "commander": "^12.0.0"
   }
 }
