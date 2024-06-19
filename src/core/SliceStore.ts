@@ -9,21 +9,21 @@ export class SliceStore<T> extends Observer<T> {
     this.state = initState();
   }
 
-  setDefaultState = (value: T) => {
+  setDefaultState(value: T): this {
     this.state = value;
     return this;
-  };
+  }
 
-  setup = (fn: any) => {
+  setup(fn: any): void {
     if (this.mounted) {
       return;
     }
     this.mounted = true;
     fn();
-  };
+  }
 
-  emit = (state: T) => {
+  emit(state: T): void {
     this.state = state;
     this.notify(state);
-  };
+  }
 }

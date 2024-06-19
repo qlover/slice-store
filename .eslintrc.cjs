@@ -1,30 +1,28 @@
+// const OFF = 0;
+// const WARNING = 1;
+const ERROR = 2;
+
 module.exports = {
+  env: { node: true, jest: true },
   overrides: [
     {
-      env: {
-        node: true
-      },
       files: ['.eslintrc.{js,cjs}'],
       parserOptions: {
         sourceType: 'script'
       }
     },
-    // work root
     {
-      ...require('./packages/_work/eslintrc.json'),
-      files: ['./packages/_work/*.js']
-    },
-    // core
-    {
-      ...require('./config/eslint/eslintrc.base.json'),
-      files: ['./packages/core/*.js', './packages/core/*.ts']
-    },
-    // react
-    {
-      ...require('./config/eslint/eslintrc.base.json'),
-      files: ['./packages/react/*.js', './packages/react/*.ts']
+      ...require('./config/eslint/base.json'),
+      files: [
+        'packages/**/*.js',
+        'packages/**/*.ts',
+        './scripts/*.js',
+        'src/**/*.js',
+        'src/**/*.ts'
+      ]
     }
   ],
+  plugins: ['jest'],
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
