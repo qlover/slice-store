@@ -1,5 +1,20 @@
 
 
+## [1.0.3](https://github.com/qlover/slice-store/compare/1.0.2...1.0.3) (2024-06-19)
+
+
+### Bug Fixes
+
+* import path.config path ([a3766e1](https://github.com/qlover/slice-store/commit/a3766e1877ef38a1661bc3bb55f4bb37bf436bbb))
+* packages ([32a67a9](https://github.com/qlover/slice-store/commit/32a67a9441c69981422d0fe2b5246ea0f6de647d))
+* scripts pkg name ([cda4731](https://github.com/qlover/slice-store/commit/cda4731d244eb8f4c14ea374b98b4d995d886d5b))
+
+
+### Features
+
+* dotenv ([2c75bff](https://github.com/qlover/slice-store/commit/2c75bffb07ec5c60d70414963e437b7612268c78))
+* src root path ([4086fc0](https://github.com/qlover/slice-store/commit/4086fc0bd407318fb4823d7a71bb84cdf098007a))
+
 ## [1.0.2](https://github.com/qlover/slice-store/compare/1.0.1...1.0.2) (2024-01-09)
 
 
