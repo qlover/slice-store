@@ -14,5 +14,5 @@ export const release = async () => {
   await build();
 
   await execSync('release-it', { stdio: 'inherit' });
-  await execSync('npm publis', { stdio: 'inherit' });
+  await execSync('npm publish', { stdio: 'inherit' });
 };
