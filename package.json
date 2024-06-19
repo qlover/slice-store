@@ -4,7 +4,12 @@
   "commander": "^12.0.0",
   "type": "module",
   "private": true,
-  "main": "",
+  "main": "dist/index",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/qlover/slice-store"
+  },
+  "homepage": "https://github.com/qlover/slice-store#readme",
   "scripts": {
     "dev": "npx tsc --watch",
     "build": "gulp build",
@@ -20,7 +25,11 @@
     "ts-run": "node ./scripts/bin/ts-run.js",
     "test": "jest"
   },
-  "keywords": [],
+  "keywords": [
+    "javascript",
+    "store",
+    "slice-store"
+  ],
   "author": "qlover",
   "license": "ISC",
   "publishConfig": {
