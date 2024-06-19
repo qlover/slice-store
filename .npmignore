@@ -12,4 +12,4 @@ gulpfile.js
 jest.config.cjs
 tsconfig.json
 tsconfig.test.json
-tesup.config.ts
+tsup.config.ts

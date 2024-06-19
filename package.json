@@ -1,9 +1,9 @@
 {
   "name": "@qlover/slice-store",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "commander": "^12.0.0",
   "type": "module",
-  "private": true,
+  "private": false,
   "main": "dist/index",
   "repository": {
     "type": "github",
