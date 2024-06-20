@@ -13,13 +13,20 @@ module.exports = {
     },
     {
       ...require('./config/eslint/base.json'),
-      files: [
-        'packages/**/*.js',
-        'packages/**/*.ts',
-        './scripts/*.js',
-        'src/**/*.js',
-        'src/**/*.ts'
-      ]
+      files: ['packages/**/*.js', 'scripts/**/*.js']
+    },
+    {
+      ...require('./config/eslint/base.ts.json'),
+      files: ['packages/**/*.ts']
+    },
+    {
+      files: ['**/*.test.js', '**/*.spec.js'],
+      rules: {
+        // https://github.com/jest-community/eslint-plugin-jest
+        'jest/no-focused-tests': ERROR,
+        'jest/valid-expect': ERROR,
+        'jest/valid-expect-in-promise': ERROR
+      }
     }
   ],
   plugins: ['jest'],

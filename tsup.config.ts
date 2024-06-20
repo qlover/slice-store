@@ -1,11 +1,11 @@
 import { Options, defineConfig } from 'tsup';
-import dotenv from 'dotenv';
+import { loadEnv } from './gulpfile';
 
-dotenv.config();
+loadEnv();
 
-const isProd = process.env.WORK_ENV === 'prod';
-
-console.log('[Tsup Build ENV]', process.env.WORK_ENV);
+const env = process.env.NODE_ENV;
+console.log('[env is]', env);
+const isProd = env === 'production';
 
 const commonConfig: Options = {
   minify: isProd,
@@ -17,11 +17,11 @@ const commonConfig: Options = {
 
 export default defineConfig([
   {
-    format: ['esm', 'cjs', 'iife'],
+    format: ['esm', 'cjs'],
     entry: ['./src/index.ts'],
     outDir: 'dist',
     platform: 'neutral',
-    globalName: 'fy',
+    globalName: 'SliceStore',
     outExtension({ format }) {
       if (format === 'iife') return { js: '.js' };
       return { js: `.${format}.js` };
