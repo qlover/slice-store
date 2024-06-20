@@ -20,6 +20,9 @@
     "url": "https://github.com/qlover/slice-store"
   },
   "homepage": "https://github.com/qlover/slice-store#readme",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "build": "gulp build",
     "format": "gulp format",
