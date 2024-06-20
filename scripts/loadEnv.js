@@ -7,6 +7,9 @@ function loadEnv() {
   const envLocalResult = dotenv.config({ path: envLocalPath });
   if (envLocalResult.error) {
     console.warn(`.env.local not found or failed to load`);
+  } else {
+    console.log('load .env.local');
+    return;
   }
 
   // 加载 .env 文件
@@ -14,7 +17,9 @@ function loadEnv() {
   const envResult = dotenv.config({ path: envPath });
   if (envResult.error) {
     console.warn(`.env not found or failed to load`);
+  } else {
+    console.log('load .env.local');
   }
 }
 
-loadEnv();
+module.exports = { loadEnv };

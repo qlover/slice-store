@@ -1,16 +1,17 @@
 const { execSync } = require('child_process');
-require('../loadEnv');
+const { loadEnv } = require('../loadEnv');
 
 function runCommand(command, options = {}) {
   try {
     execSync(command, { stdio: 'inherit', ...options });
   } catch (error) {
-    console.error(`Error executing command: ${command}`);
+    console.error(`Error executing command: ${command}`, error);
     process.exit(1);
   }
 }
 
 function main() {
+  loadEnv();
   // 安装依赖
   // console.log('Installing dependencies...');
   // runCommand('yarn install --frozen-lockfile');
@@ -25,12 +26,18 @@ function main() {
     process.exit(1);
   }
   runCommand(
-    `echo "//registry.npmjs.org/:_authToken=${process.env.NPM_TOKEN}" > ~/.npmrc`
+    `echo "//registry.npmjs.org/:_authToken=${process.env.NPM_TOKEN}" > .npmrc`
+    // `npm config set //registry.npmjs.org/:_authToken=${process.env.NPM_TOKEN}`
   );
 
   // 发布到 npm 和 GitHub
   console.log('Publishing to npm and GitHub...');
-  runCommand('npx release-it');
+  runCommand('npx release-it --ci', {
+    env: {
+      ...process.env,
+      NPM_TOKEN: process.env.NPM_TOKEN
+    }
+  });
 }
 
 main();
