@@ -31,7 +31,7 @@
     "reinit": "npm run clean && yarn",
     "setup:husky": "node scripts/bin/setupHusky",
     "commit": "node ./scripts/bin/commit.js",
-    "release": "release-it",
+    "release": "node ./scripts/bin/release.js",
     "ts-run": "node ./scripts/bin/ts-run.js",
     "test": "jest"
   },
