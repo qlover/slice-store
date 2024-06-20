@@ -4,7 +4,6 @@ config
 node_modules
 packages
 scripts
-src
 test
 babel.config.js
 commitlint.config.cjs

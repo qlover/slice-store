@@ -18,7 +18,7 @@ const commonConfig: Options = {
 export default defineConfig([
   {
     format: ['esm', 'cjs'],
-    entry: ['./src/index.ts'],
+    entry: ['./packages/main/index.ts'],
     outDir: 'dist',
     platform: 'neutral',
     globalName: 'SliceStore',

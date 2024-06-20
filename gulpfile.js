@@ -29,3 +29,8 @@ export const build = async () => {
   await cleanBuild();
   execSync('npx tsup', { stdio: 'inherit' });
 };
+
+export const release = async () => {
+  await build();
+  // TODO: use ci/cd publish
+};

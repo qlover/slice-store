@@ -1,4 +1,4 @@
-import { SliceStore } from '../src';
+import { SliceStore } from '../packages/main';
 
 type Value = {
   count: number;

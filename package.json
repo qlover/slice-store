@@ -4,7 +4,17 @@
   "description": "A simple and fast state management",
   "type": "module",
   "private": false,
-  "main": "dist/index",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs.js",
+      "import": "./dist/index.esm.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
   "repository": {
     "type": "github",
     "url": "https://github.com/qlover/slice-store"
@@ -18,7 +28,7 @@
     "reinit": "npm run clean && yarn",
     "setup:husky": "node scripts/bin/setupHusky",
     "commit": "node ./scripts/bin/commit.js",
-    "release": "gulp release",
+    "release": "release-it",
     "ts-run": "node ./scripts/bin/ts-run.js",
     "test": "jest"
   },
