@@ -1,68 +1,67 @@
 
 
-## [1.0.5](https://github.com/qlover/slice-store/compare/1.0.2...1.0.5) (2024-06-20)
+## [1.0.111](https://github.com/qlover/fe-base/compare/1.0.110...1.0.111) (2024-07-03)
+
+## [1.0.110](https://github.com/qlover/fe-base/compare/1.0.109...1.0.110) (2024-07-03)
+
+## [1.0.109](https://github.com/qlover/fe-base/compare/1.0.108...1.0.109) (2024-07-03)
+
+
+### Reverts
+
+* Revert "build: add quick script name (#76)" (#77) ([9768385](https://github.com/qlover/fe-base/commit/9768385c4ab50446f557b1e68702183c257e1049)), closes [#76](https://github.com/qlover/fe-base/issues/76) [#77](https://github.com/qlover/fe-base/issues/77)
+
+## [1.0.108](https://github.com/qlover/fe-base/compare/1.0.107...1.0.108) (2024-07-03)
+
+## [1.0.107](https://github.com/qlover/fe-base/compare/1.0.106...1.0.107) (2024-07-01)
+
+## [1.0.106](https://github.com/qlover/fe-base/compare/1.0.104...1.0.106) (2024-06-27)
 
 
 ### Bug Fixes
 
-* **.eslintrc:** distinguish .js or .ts ([d501121](https://github.com/qlover/slice-store/commit/d501121fee68657c2c5bb448b90920bf185520cc))
-* import path.config path ([a3766e1](https://github.com/qlover/slice-store/commit/a3766e1877ef38a1661bc3bb55f4bb37bf436bbb))
-* **package.json:** add description ([b4f5181](https://github.com/qlover/slice-store/commit/b4f5181219d22701faff8db389c2a9268dece21c))
-* packages ([32a67a9](https://github.com/qlover/slice-store/commit/32a67a9441c69981422d0fe2b5246ea0f6de647d))
-* scripts pkg name ([cda4731](https://github.com/qlover/slice-store/commit/cda4731d244eb8f4c14ea374b98b4d995d886d5b))
+* change pr branche name ([c35b267](https://github.com/qlover/fe-base/commit/c35b2679b0f7fecdec3c1749896e5a4b9802c811))
+* change pr branche name ([156d9a3](https://github.com/qlover/fe-base/commit/156d9a3cb6cc7c56eba295465b855a1725e192ed))
 
-
-### Features
-
-* **.env:** use dotenv load .env ([3879596](https://github.com/qlover/slice-store/commit/3879596f6ca4017b1f12e4fc3ea5c928dc575fd0))
-* dotenv ([2c75bff](https://github.com/qlover/slice-store/commit/2c75bffb07ec5c60d70414963e437b7612268c78))
-* src root path ([4086fc0](https://github.com/qlover/slice-store/commit/4086fc0bd407318fb4823d7a71bb84cdf098007a))
-* **tsup.config:** tsup build pack ([83593c6](https://github.com/qlover/slice-store/commit/83593c66bda61e18120b4c03f5afadee4d96374d))
-
-## [1.0.4](https://github.com/qlover/slice-store/compare/1.0.2...1.0.4) (2024-06-19)
+## [1.0.102](https://github.com/qlover/fe-base/compare/1.0.99...1.0.102) (2024-06-27)
 
 
 ### Bug Fixes
 
-* import path.config path ([a3766e1](https://github.com/qlover/slice-store/commit/a3766e1877ef38a1661bc3bb55f4bb37bf436bbb))
-* packages ([32a67a9](https://github.com/qlover/slice-store/commit/32a67a9441c69981422d0fe2b5246ea0f6de647d))
-* scripts pkg name ([cda4731](https://github.com/qlover/slice-store/commit/cda4731d244eb8f4c14ea374b98b4d995d886d5b))
+* get release pr-branch ([7b07706](https://github.com/qlover/fe-base/commit/7b07706596a2dd18330023bc74dec55f4387916b))
+* get release pr-branch ([981276b](https://github.com/qlover/fe-base/commit/981276b95d6213486b23567b33db3bbef9401ddb))
 
+## [1.0.99](https://github.com/qlover/fe-base/compare/1.0.98...1.0.99) (2024-06-26)
 
-### Features
+## [1.0.98](https://github.com/qlover/fe-base/compare/1.0.97...1.0.98) (2024-06-26)
 
-* dotenv ([2c75bff](https://github.com/qlover/slice-store/commit/2c75bffb07ec5c60d70414963e437b7612268c78))
-* src root path ([4086fc0](https://github.com/qlover/slice-store/commit/4086fc0bd407318fb4823d7a71bb84cdf098007a))
+## [1.0.97](https://github.com/qlover/fe-base/compare/1.0.96...1.0.97) (2024-06-26)
 
-## [1.0.3](https://github.com/qlover/slice-store/compare/1.0.2...1.0.3) (2024-06-19)
+## [1.0.96](https://github.com/qlover/fe-base/compare/1.0.95...1.0.96) (2024-06-26)
+
+## [1.0.95](https://github.com/qlover/fe-base/compare/1.0.94...1.0.95) (2024-06-26)
+
+## [1.0.94](https://github.com/qlover/fe-base/compare/1.0.2...1.0.94) (2024-06-25)
 
 
 ### Bug Fixes
 
-* import path.config path ([a3766e1](https://github.com/qlover/slice-store/commit/a3766e1877ef38a1661bc3bb55f4bb37bf436bbb))
-* packages ([32a67a9](https://github.com/qlover/slice-store/commit/32a67a9441c69981422d0fe2b5246ea0f6de647d))
-* scripts pkg name ([cda4731](https://github.com/qlover/slice-store/commit/cda4731d244eb8f4c14ea374b98b4d995d886d5b))
+* package version ([74eb8bf](https://github.com/qlover/fe-base/commit/74eb8bf060e85004d9574c009e1e0cce9183155a))
+* package version ([#14](https://github.com/qlover/fe-base/issues/14)) ([fc344a2](https://github.com/qlover/fe-base/commit/fc344a2b3825d2673aa63dcc90b2411e4fb304b0))
+* package version ([#17](https://github.com/qlover/fe-base/issues/17)) ([fe2088f](https://github.com/qlover/fe-base/commit/fe2088fb5bb24d04b52c4ec7160a6d73f8e6ef4c))
+* package version ([#18](https://github.com/qlover/fe-base/issues/18)) ([c6b47f1](https://github.com/qlover/fe-base/commit/c6b47f19920ebed721bcfff287086e8d1bb6630f))
+* **package.json:** change release scripts ([393ae27](https://github.com/qlover/fe-base/commit/393ae271ac217ea27ec65667f50d813b6b1a5232))
+* **package.json:** change version ([5454eac](https://github.com/qlover/fe-base/commit/5454eacad4e7550c063912fe2b77a00793f46cf3))
+* push github release ([6132bb1](https://github.com/qlover/fe-base/commit/6132bb1cb8b6be67c483057ace8945b08c625f27))
+* release merge target branch ([7a39157](https://github.com/qlover/fe-base/commit/7a39157c41a24ece97eae8070037f2edd4520647))
+* version ([a8004a1](https://github.com/qlover/fe-base/commit/a8004a1d3867dc4da7c6a450e1e92a2a9c96f847))
+* version ([821504e](https://github.com/qlover/fe-base/commit/821504e0e0051468ed5a45d941d025192c74665a))
+* version ([17da9d2](https://github.com/qlover/fe-base/commit/17da9d2bd4149717b92c98a82caf1f1d17616841))
 
 
 ### Features
 
-* dotenv ([2c75bff](https://github.com/qlover/slice-store/commit/2c75bffb07ec5c60d70414963e437b7612268c78))
-* src root path ([4086fc0](https://github.com/qlover/slice-store/commit/4086fc0bd407318fb4823d7a71bb84cdf098007a))
+* clean branch ([075952b](https://github.com/qlover/fe-base/commit/075952b5230a4518a7243c9d716e3a245eac1115))
+* clean branch ([b5156ce](https://github.com/qlover/fe-base/commit/b5156ceebb5caa3266147a0255eeefc451f27a28))
 
-## [1.0.2](https://github.com/qlover/slice-store/compare/1.0.1...1.0.2) (2024-01-09)
-
-
-### Features
-
-* **core:** add core and react ([d8d816d](https://github.com/qlover/slice-store/commit/d8d816df06523f576da6b2e875f9d0bdfafbd23b))
-
-## 1.0.1 (2023-12-08)
-
-
-### Features
-
-* add packages/work ([18f528e](https://github.com/qlover/front-work/commit/18f528e9d41ca43abe615b57863c8acde96952ca))
-* complete the CI/CD workflow ([ff77af7](https://github.com/qlover/front-work/commit/ff77af71a508b8f1cff5730ddf881cddaa309b01))
-* eslint & typescript & prettier ([6df84a4](https://github.com/qlover/front-work/commit/6df84a47a2fd7ff686ace9ffe43830481feb47d8))
-* eslint and typescript ([98369d0](https://github.com/qlover/front-work/commit/98369d0cf3b77f51a8a42888fe12087327d46f20))
-* many eslint config ([0280a41](https://github.com/qlover/front-work/commit/0280a414fcaf6d6a9aafd73b8c18609c89892d7c))
+<!-- TODO: full other functional -->

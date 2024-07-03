@@ -1,0 +1,34 @@
+name: FE Release main
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: |
+      contains(github.event.head_commit.message, '[From bot]') == false &&
+      contains(github.event.head_commit.message, 'chore(tag)') == false
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.push.head.ref }}
+          repository: ${{ github.event.push.head.repo.full_name }}
+      - name: Install dependencies
+        run: yarn install
+      - name: Build dist
+        run: yarn build
+      - name: Config Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      # !!!open Workflow permissions setting, Actions -> general -> Workflow permissions -> Read and write permissions
+      # When releasing, a commit will be created and then submitted to the branch, creating a PR to merge with the protected branch
+      - name: Publishing to NPM and GitHub
+        run: npm run release
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN}}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN}}
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
