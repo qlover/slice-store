@@ -1,0 +1,14 @@
+.*
+!.npmrc
+config
+node_modules
+packages
+scripts
+test
+babel.config.js
+commitlint.config.cjs
+gulpfile.js
+jest.config.cjs
+tsconfig.json
+tsconfig.test.json
+tsup.config.ts
