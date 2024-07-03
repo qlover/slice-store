@@ -37,8 +37,9 @@
     "release": "fe-release"
   },
   "keywords": [
-    "slice-store",
-    "store"
+    "javascript",
+    "store",
+    "slice-store"
   ],
   "author": "qlover",
   "license": "ISC",
