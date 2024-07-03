@@ -1,38 +1,17 @@
-## 简介
+# fe-base
 
-slice-store 可以帮助您编写行为一致、在不同环境（客户端、服务器和本机）中运行且易于测试的 JavaScript 应用程序.
+- typescript + eslint + prettier 控制代码格式
+- commitlint 规范提交格式
+- jtest 测试
+- rimraf 文件目录清理工具
+- CI/CD 自动化 github workfolw
+  - release-it 发布到 npm, github
+- ts-node node 环境支持 typescript
+- dotenv 环境变量加载
+- coress-env TODO: 增加跨平台全局变量工具
 
-## 安装
+# scripts
 
-```bash
-npm install @qlover/slice-store
-# or use yarn
-yarn add @qlover/slice-store
 ```
-
-## 使用示例
-
-```typescript
-type Value = {
-  count: number;
-};
-class AppStore extends SliceStore<Value[]> {
-  constructor() {
-    super(() => [{ count: 1 }]);
-  }
-  incAll() {
-    const newState = this.state.map((val) => ({
-      count: val.count + 1
-    }));
-    this.emit(newState);
-  }
-}
-
-const appStore = new AppStore();
-
-appStore.incAll();
-console.log(appStore.state[0].count); //=> 2
-
-appStore.incAll();
-console.log(appStore.state[0].count); //=> 3
+yarn add @qlover/fe-scripts --dev
 ```

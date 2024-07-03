@@ -1,7 +1,7 @@
 import { Options, defineConfig } from 'tsup';
-import { loadEnv } from './gulpfile';
+import { config } from 'dotenv';
 
-loadEnv();
+config({ path: ['.env.local', '.env'] });
 
 const env = process.env.NODE_ENV;
 console.log('[env is]', env);
@@ -19,9 +19,23 @@ export default defineConfig([
   {
     format: ['esm', 'cjs'],
     entry: ['./packages/main/index.ts'],
-    outDir: 'dist',
-    platform: 'neutral',
-    globalName: 'SliceStore',
+    outDir: 'dist/main',
+    platform: 'browser',
+    globalName: 'PackagesMain',
+    external: [],
+    outExtension({ format }) {
+      if (format === 'iife') return { js: '.js' };
+      return { js: `.${format}.js` };
+    },
+    ...commonConfig
+  },
+  {
+    format: ['esm', 'cjs'],
+    entry: ['./packages/node/index.ts'],
+    outDir: 'dist/node',
+    platform: 'node',
+    globalName: 'PackagesNode',
+    external: [],
     outExtension({ format }) {
       if (format === 'iife') return { js: '.js' };
       return { js: `.${format}.js` };

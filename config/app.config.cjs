@@ -1,5 +1,5 @@
-const env = process.env.WORK_ENV;
+const env = process.env.NODE_ENV;
 
 module.exports = {
-  env
+  env,
 };
