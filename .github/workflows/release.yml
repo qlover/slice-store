@@ -1,8 +1,8 @@
-name: FE Release build/tsup
+name: FE Release main
 on:
   push:
     branches:
-      - build/tsup
+      - main
 jobs:
   build:
     runs-on: ubuntu-latest

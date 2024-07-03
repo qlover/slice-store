@@ -1,7 +1,7 @@
 {
-  "name": "@qlover/fe-build-tsup",
-  "version": "0.0.1",
-  "description": "fe base tsup builder",
+  "name": "@qlover/slice-store",
+  "version": "1.0.7",
+  "description": "A simple and fast state management",
   "type": "module",
   "private": false,
   "main": "dist/index.cjs.js",
@@ -22,9 +22,9 @@
   ],
   "repository": {
     "type": "github",
-    "url": "https://github.com/qlover/fe-base"
+    "url": "https://github.com/qlover/slice-store"
   },
-  "homepage": "https://github.com/qlover/fe-base#readme",
+  "homepage": "https://github.com/qlover/slice-store#readme",
   "scripts": {
     "build": "npx tsup",
     "prettier": "prettier packages --write",

@@ -1,8 +1,8 @@
-name: FE Build build/tsup
+name: FE Build main
 on:
   pull_request:
     branches:
-      - build/tsup
+      - main
 jobs:
   build:
     runs-on: ubuntu-latest
