@@ -17,11 +17,12 @@ const commonConfig: Options = {
 
 export default defineConfig([
   {
-    format: ['esm', 'cjs'],
+    format: ['esm', 'cjs', 'iife'],
     entry: ['./packages/main/index.ts'],
     outDir: 'dist',
     platform: 'neutral',
     globalName: 'SliceStore',
+    target: 'es5',
     outExtension({ format }) {
       if (format === 'iife') return { js: '.js' };
       return { js: `.${format}.js` };

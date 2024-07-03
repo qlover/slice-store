@@ -36,7 +36,10 @@
     "commit": "fe-commit",
     "release": "fe-release"
   },
-  "keywords": [],
+  "keywords": [
+    "slice-store",
+    "store"
+  ],
   "author": "qlover",
   "license": "ISC",
   "publishConfig": {
@@ -52,6 +55,7 @@
     "@commitlint/config-conventional": "^18.4.3",
     "@qlover/fe-scripts": "^0.0.6",
     "@release-it/conventional-changelog": "^8.0.1",
+    "@swc/core": "^1.6.7-nightly-20240703.2",
     "@types/jest": "^29.5.11",
     "@typescript-eslint/eslint-plugin": "^6.13.2",
     "@typescript-eslint/parser": "^6.13.2",
