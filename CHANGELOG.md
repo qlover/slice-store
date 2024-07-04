@@ -1,5 +1,12 @@
 
 
+## 1.0.9 (2024-07-04)
+
+
+### Features
+
+* replace script to fe-scripts ([#5](https://github.com/qlover/slice-store/issues/5)) ([3e07bbc](https://github.com/qlover/slice-store/commit/3e07bbce7d664cf0da86827f74c2102ee33e10a0))
+
 ## 1.0.8 (2024-07-03)
 
 ## [1.0.111](https://github.com/qlover/fe-base/compare/1.0.110...1.0.111) (2024-07-03)
