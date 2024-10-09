@@ -2,15 +2,19 @@ import { Observer } from './Observer';
 
 export class SliceStore<T> extends Observer<T> {
   private mounted = false;
-  state: T;
+  private _state: T;
+
+  get state(): T {
+    return this._state;
+  }
 
   constructor(initState: () => T) {
     super();
-    this.state = initState();
+    this._state = initState();
   }
 
   setDefaultState(value: T): this {
-    this.state = value;
+    this._state = value;
     return this;
   }
 
@@ -23,7 +27,8 @@ export class SliceStore<T> extends Observer<T> {
   }
 
   emit(state: T): void {
-    this.state = state;
-    this.notify(state);
+    const lastValue = this.state;
+    this._state = state;
+    this.notify(this._state, lastValue);
   }
 }
