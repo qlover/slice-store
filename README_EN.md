@@ -1,27 +1,27 @@
 # slice-store
 
-## 简介
+## Introduction
 
-slice-store 是一个强大的状态管理库，可以帮助您编写行为一致、在不同环境（客户端、服务器和本机）中运行且易于测试的 JavaScript 应用程序。它提供了一种简单而有效的方式来管理和更新应用程序的状态。
+slice-store is a powerful state management library that helps you write JavaScript applications with consistent behavior, running in different environments (client, server, and native), and easy to test. It provides a simple and effective way to manage and update your application's state.
 
-## 特性
+## Features
 
-- 简单易用的 API
-- 支持多种数据类型（对象、数组、数字等）
-- 可观察的状态更新
-- 支持同一状态绑定多个处理事件
-- 类型安全（使用 TypeScript）
-- 跨平台兼容性
+- Simple and easy-to-use API
+- Support for various data types (objects, arrays, numbers, etc.)
+- Observable state updates
+- Support for binding multiple event handlers to the same state
+- Type-safe (using TypeScript)
+- Cross-platform compatibility
 
-## 安装
+## Installation
 
 ```bash
 npm install @qlover/slice-store
-# 或使用 yarn
+# or use yarn
 yarn add @qlover/slice-store
 ```
 
-## 基本使用示例
+## Basic Usage Example
 
 ```typescript
 type Value = {
@@ -48,9 +48,9 @@ appStore.incAll();
 console.log(appStore.state[0].count); //=> 3
 ```
 
-## 多观察者使用示例
+## Multiple Observers Example
 
-slice-store 现在支持为同一个状态绑定多个处理事件。这使得您可以更灵活地响应状态变化：
+slice-store now supports binding multiple event handlers to the same state. This allows you to respond more flexibly to state changes:
 
 ```typescript
 import { SliceStore } from '@qlover/slice-store';
@@ -67,7 +67,7 @@ class CounterStore extends SliceStore<number> {
 
 const counterStore = new CounterStore();
 
-// 绑定多个观察者
+// Bind multiple observers
 counterStore.subscribe((state) => {
   console.log('Observer 1:', state);
 });
@@ -77,14 +77,14 @@ counterStore.subscribe((state) => {
 });
 
 counterStore.increment();
-// 输出:
+// Output:
 // Observer 1: 1
 // Observer 2: 1
 
 counterStore.increment();
-// 输出:
+// Output:
 // Observer 1: 2
 // Observer 2: 2
 ```
 
-这个例子展示了如何为同一个状态绑定多个观察者，每个观察者都会在状态变化时被调用。
+This example demonstrates how to bind multiple observers to the same state, with each observer being called when the state changes.
