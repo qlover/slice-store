@@ -1,5 +1,12 @@
 
 
+## [1.0.10](https://github.com/qlover/slice-store/compare/1.0.9...1.0.10) (2024-10-10)
+
+
+### Features
+
+* observers multi listener ([#7](https://github.com/qlover/slice-store/issues/7)) ([5c01735](https://github.com/qlover/slice-store/commit/5c01735f46ecf0924e8cad8a50b8f3487464f485))
+
 ## 1.0.9 (2024-07-04)
 
 
