@@ -8,16 +8,9 @@ export default {
   projects: [
     {
       ...tsJestConfig,
-      displayName: 'pack-app-node',
-      testMatch: tsJestConfig.testMatch.map(
-        (item) => '<rootDir>/packages/node/' + item
-      )
-    },
-    {
-      ...tsJestConfig,
       displayName: 'pack-app-browser',
       testMatch: tsJestConfig.testMatch.map(
-        (item) => '<rootDir>/packages/browser/' + item
+        (item) => '<rootDir>/packages/slice-store/' + item
       )
     },
     {
@@ -25,7 +18,9 @@ export default {
       displayName: 'pack-app-react',
       testEnvironment: 'jest-environment-jsdom',
       extensionsToTreatAsEsm: ['.ts', '.tsx'],
-      testMatch: ['<rootDir>/packages/react-vite-lib/__tests__/**/*.test.tsx']
+      testMatch: [
+        '<rootDir>/packages/slice-store-react/__tests__/**/*.test.tsx'
+      ]
     }
   ]
 };
