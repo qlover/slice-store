@@ -8,7 +8,8 @@ class AppStore extends SliceStore<Value> {
   constructor() {
     super(() => ({ count: 1 }));
   }
-  inc() {
+
+  inc(): void {
     const newState = {
       count: this.state.count + 1
     };
@@ -17,10 +18,6 @@ class AppStore extends SliceStore<Value> {
 }
 
 describe('subscribe', () => {
-  test('many', () => {
-    const appStore = new AppStore();
-  });
-
   test('observe count changes using appStore.observe', () => {
     const appStore = new AppStore();
 

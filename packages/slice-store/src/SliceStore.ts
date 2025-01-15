@@ -1,7 +1,6 @@
 import { Observer } from './Observer';
 
 export class SliceStore<T> extends Observer<T> {
-  private mounted = false;
   private _state: T;
 
   get state(): T {
@@ -16,14 +15,6 @@ export class SliceStore<T> extends Observer<T> {
   setDefaultState(value: T): this {
     this._state = value;
     return this;
-  }
-
-  setup(fn: any): void {
-    if (this.mounted) {
-      return;
-    }
-    this.mounted = true;
-    fn();
   }
 
   emit(state: T): void {

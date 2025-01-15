@@ -7,7 +7,8 @@ class AppStore extends SliceStore<Value> {
   constructor() {
     super(() => ({ count: 1 }));
   }
-  inc() {
+
+  inc(): void {
     this.emit(Object.assign(this.state, { count: this.state.count + 1 }));
   }
 }

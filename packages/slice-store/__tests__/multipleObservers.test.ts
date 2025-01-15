@@ -10,11 +10,11 @@ class AppStore extends SliceStore<Value> {
     super(() => ({ count: 1, name: 'initial' }));
   }
 
-  increment() {
+  increment(): void {
     this.emit({ ...this.state, count: this.state.count + 1 });
   }
 
-  changeName(newName: string) {
+  changeName(newName: string): void {
     this.emit({ ...this.state, name: newName });
   }
 }
@@ -40,8 +40,6 @@ describe('multiple observers', () => {
     const unsubscribeName = appStore.observe(
       (state) => state.name,
       (newName) => {
-        console.log('nameObserverCalled', newName);
-
         nameObserverCalled++;
         expect(newName).toBe(appStore.state.name);
       }

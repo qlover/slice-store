@@ -6,26 +6,21 @@ export default {
   testEnvironment: 'jest-environment-jsdom',
   extensionsToTreatAsEsm: ['.ts', '.tsx'],
   projects: [
+    // {
+    //   ...tsJestConfig,
+    //   displayName: 'slice-store',
+    //   testMatch: tsJestConfig.testMatch.map(
+    //     (item) => '<rootDir>/packages/slice-store/' + item
+    //   )
+    // },
     {
       ...tsJestConfig,
-      displayName: 'pack-app-node',
-      testMatch: tsJestConfig.testMatch.map(
-        (item) => '<rootDir>/packages/node/' + item
-      )
-    },
-    {
-      ...tsJestConfig,
-      displayName: 'pack-app-browser',
-      testMatch: tsJestConfig.testMatch.map(
-        (item) => '<rootDir>/packages/browser/' + item
-      )
-    },
-    {
-      ...tsJestConfig,
-      displayName: 'pack-app-react',
+      displayName: 'slice-store-react',
       testEnvironment: 'jest-environment-jsdom',
       extensionsToTreatAsEsm: ['.ts', '.tsx'],
-      testMatch: ['<rootDir>/packages/react-vite-lib/__tests__/**/*.test.tsx']
+      testMatch: tsJestConfig.testMatch.map(
+        (item) => '<rootDir>/packages/slice-store-react/' + item
+      )
     }
   ]
 };
