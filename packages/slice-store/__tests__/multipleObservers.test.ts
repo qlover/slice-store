@@ -1,4 +1,4 @@
-import { SliceStore } from '../packages/main';
+import { SliceStore } from '../src';
 
 type Value = {
   count: number;
@@ -9,11 +9,11 @@ class AppStore extends SliceStore<Value> {
   constructor() {
     super(() => ({ count: 1, name: 'initial' }));
   }
-  
+
   increment() {
     this.emit({ ...this.state, count: this.state.count + 1 });
   }
-  
+
   changeName(newName: string) {
     this.emit({ ...this.state, name: newName });
   }
@@ -22,14 +22,14 @@ class AppStore extends SliceStore<Value> {
 describe('multiple observers', () => {
   test('observers should only be called when their selected state changes', () => {
     const appStore = new AppStore();
-    
+
     let countObserverCalled = 0;
     let nameObserverCalled = 0;
     let fullStateObserverCalled = 0;
 
     // 观察者1: 只关注 count
     const unsubscribeCount = appStore.observe(
-      state => state.count,
+      (state) => state.count,
       (newCount) => {
         countObserverCalled++;
         expect(newCount).toBe(appStore.state.count);
@@ -38,22 +38,20 @@ describe('multiple observers', () => {
 
     // 观察者2: 只关注 name
     const unsubscribeName = appStore.observe(
-      state => state.name,
+      (state) => state.name,
       (newName) => {
         console.log('nameObserverCalled', newName);
-        
+
         nameObserverCalled++;
         expect(newName).toBe(appStore.state.name);
       }
     );
 
     // 观察者3: 关注整个状态
-    const unsubscribeFullState = appStore.observe(
-      (newState) => {
-        fullStateObserverCalled++;
-        expect(newState).toEqual(appStore.state);
-      }
-    );
+    const unsubscribeFullState = appStore.observe((newState) => {
+      fullStateObserverCalled++;
+      expect(newState).toEqual(appStore.state);
+    });
 
     // 初始状态不应触发观察者
     expect(countObserverCalled).toBe(0);
@@ -84,16 +82,15 @@ describe('multiple observers', () => {
     expect(fullStateObserverCalled).toBe(2);
   });
 
-  
   test('多个观察者监听同一状态时应该都被触发', () => {
     const appStore = new AppStore();
-    
+
     let observer1CalledCount = 0;
     let observer2CalledCount = 0;
     let observer3CalledCount = 0;
 
     const unsubscribe1 = appStore.observe(
-      state => state.count,
+      (state) => state.count,
       (newCount) => {
         observer1CalledCount++;
         expect(newCount).toBe(appStore.state.count);
@@ -101,7 +98,7 @@ describe('multiple observers', () => {
     );
 
     const unsubscribe2 = appStore.observe(
-      state => state.count,
+      (state) => state.count,
       (newCount) => {
         observer2CalledCount++;
         expect(newCount).toBe(appStore.state.count);
@@ -109,7 +106,7 @@ describe('multiple observers', () => {
     );
 
     const unsubscribe3 = appStore.observe(
-      state => state.count,
+      (state) => state.count,
       (newCount) => {
         observer3CalledCount++;
         expect(newCount).toBe(appStore.state.count);
@@ -161,11 +158,11 @@ describe('multiple observers', () => {
 
   test('连续多次改变状态，观察者应该被多次触发', () => {
     const appStore = new AppStore();
-    
+
     let observerCalledCount = 0;
 
     const unsubscribe = appStore.observe(
-      state => state.count,
+      (state) => state.count,
       (newCount) => {
         observerCalledCount++;
         expect(newCount).toBe(appStore.state.count);

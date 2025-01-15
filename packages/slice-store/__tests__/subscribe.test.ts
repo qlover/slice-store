@@ -1,4 +1,4 @@
-import { SliceStore } from '../packages/main';
+import { SliceStore } from '../src';
 
 type Value = {
   count: number;
@@ -23,11 +23,14 @@ describe('subscribe', () => {
 
   test('observe count changes using appStore.observe', () => {
     const appStore = new AppStore();
-    
+
     let lastCount = appStore.state.count;
-    const unsubscribe = appStore.observe((state) => state.count, (newCount) => {
-      lastCount = newCount;
-    });
+    const unsubscribe = appStore.observe(
+      (state) => state.count,
+      (newCount) => {
+        lastCount = newCount;
+      }
+    );
 
     expect(lastCount).toBe(1); // 初始值应该是1
 

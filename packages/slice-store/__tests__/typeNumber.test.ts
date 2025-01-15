@@ -1,4 +1,4 @@
-import { SliceStore } from '../packages/main';
+import { SliceStore } from '../src';
 
 class AppStore extends SliceStore<number> {
   constructor() {
