@@ -1,17 +1,18 @@
 # slice-store-react
-## 简介
 
-slice-store 可以帮助您编写行为一致、在不同环境（客户端、服务器和本机）中运行且易于测试的 JavaScript 应用程序.
+## Introduction
 
-## 特性
+slice-store helps you write consistent, testable JavaScript applications that run in different environments (client, server, and native).
 
-- 简单易用的 API
-- 支持复杂数据结构
-- 高效的状态更新
-- 支持选择器功能
-- 完善的类型支持
+## Features
 
-## 安装
+- Simple and easy-to-use API
+- Support for complex data structures
+- Efficient state updates
+- Selector functionality
+- Comprehensive type support
+
+## Installation
 
 ```bash
 npm install @qlover/slice-store-react
@@ -19,9 +20,9 @@ npm install @qlover/slice-store-react
 yarn add @qlover/slice-store-react
 ```
 
-## 使用示例
+## Usage Examples
 
-### 基本使用
+### Basic Usage
 
 ```tsx
 import { SliceStore } from '@qlover/slice-store';
@@ -59,7 +60,7 @@ function App() {
 export default App;
 ```
 
-### 使用选择器
+### Using Selectors
 
 ```tsx
 import { SliceStore } from '@qlover/slice-store';
@@ -102,7 +103,7 @@ function UserInfo() {
 }
 ```
 
-### 多个组件监听同一个状态
+### Multiple Components Listening to the Same State
 
 ```tsx
 import { SliceStore } from '@qlover/slice-store';
@@ -128,7 +129,7 @@ function CounterDisplay() {
 }
 
 function IncrementButton() {
-  useSliceStore(counterStore); // 监听状态变化以触发重新渲染
+  useSliceStore(counterStore); // Listen to state changes to trigger re-render
   return <button onClick={counterStore.increment}>Increment</button>;
 }
 
@@ -136,29 +137,29 @@ function App() {
   return (
     <div>
       <CounterDisplay />
-      <CounterDisplay /> {/* 两个组件同时显示并更新计数 */}
+      <CounterDisplay /> {/* Two components displaying and updating the count simultaneously */}
       <IncrementButton />
     </div>
   );
 }
 ```
 
-这些示例展示了 @qlover/slice-store-react 的灵活性和强大功能，包括基本用法、选择器的使用，以及多个组件如何共享和响应同一个状态。
+These examples demonstrate the flexibility and power of @qlover/slice-store-react, including basic usage, selector usage, and how multiple components can share and respond to the same state.
 
-## 测试
+## Testing
 
-我们的测试套件涵盖了以下方面:
+Our test suite covers the following aspects:
 
-- 基本功能测试
-- 复杂数据结构的处理
-- 多组件同时监听状态变化
-- 选择器功能的使用
-- 边缘情况处理(空数组、未定义值等)
+- Basic functionality tests
+- Handling of complex data structures
+- Multiple components simultaneously listening to state changes
+- Selector functionality usage
+- Edge case handling (empty arrays, undefined values, etc.)
 
-## 贡献
+## Contributing
 
-欢迎提交 issues 和 pull requests 来帮助改进这个项目。
+We welcome issues and pull requests to help improve this project.
 
-## 许可证
+## License
 
 ISC
