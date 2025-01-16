@@ -1,10 +1,9 @@
 {
-  "protectedBranches": ["master", "develop"],
+  "protectedBranches": ["main", "develop", "v1.0.10"],
   "release": {
     "packagesDirectories": [
-      "packages/browser",
-      "packages/node",
-      "packages/react-vite-lib"
+      "packages/slice-store",
+      "packages/slice-store-react"
     ]
   }
 }

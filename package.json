@@ -10,9 +10,7 @@
   },
   "homepage": "https://github.com/qlover/fe-base#readme",
   "scripts": {
-    "build": "pnpm run build:slice-store && pnpm run build:slice-store-react",
-    "build:slice-store": "pnpm run build --filter=@qlover/slice-store",
-    "build:slice-store-react": "pnpm run build --filter=@qlover/slice-store-react",
+    "build": "pnpm -r run build",
     "prettier": "prettier --ignore-path .prettierignore **/*.{js,ts,json,cjs,mjs} --write",
     "lint": "eslint . --fix",
     "test": "jest",

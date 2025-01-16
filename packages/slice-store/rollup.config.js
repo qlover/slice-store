@@ -6,11 +6,13 @@ import dts from 'rollup-plugin-dts';
 import typescript from 'rollup-plugin-typescript2';
 import { builtinModules } from 'module';
 import { readFileSync, rmSync } from 'fs';
+import { searchEnv } from '@qlover/fe-scripts';
 
+const env = searchEnv({ logger: console });
 const pkg = JSON.parse(readFileSync('./package.json'), 'utf-8');
 const tsConfig = JSON.parse(readFileSync('./tsconfig.json'), 'utf-8');
 
-const isProduction = false;
+const isProduction = env.get('NODE_ENV') === 'production';
 const buildDir = tsConfig.compilerOptions.outDir;
 
 const treeshake = {
@@ -18,6 +20,7 @@ const treeshake = {
   propertyReadSideEffects: false,
   tryCatchDeoptimization: false
 };
+
 const defaultExternal = [
   ...builtinModules,
   ...builtinModules.map((mod) => `node:${mod}`),
@@ -44,7 +47,7 @@ function createPlugin(minify) {
 
 function cleanBuildDir() {
   rmSync(buildDir, { recursive: true, force: true });
-  console.log(`${buildDir} cleaned`);
+  console.log(`slice-store ${buildDir} cleaned`);
 }
 
 cleanBuildDir();
@@ -58,12 +61,17 @@ const config = [
     external: defaultExternal,
     output: [
       {
-        file: 'dist/cjs/index.js',
+        file: 'dist/index.cjs',
         format: 'cjs'
       },
       {
-        file: 'dist/es/index.js',
+        file: 'dist/index.es.js',
         format: 'es'
+      },
+      {
+        file: 'dist/index.js',
+        format: 'umd',
+        name: 'SliceStore'
       }
     ],
     plugins: createPlugin(isProduction),
@@ -73,11 +81,7 @@ const config = [
     input: './src/index.ts',
     output: [
       {
-        file: 'dist/cjs/index.d.ts',
-        format: 'cjs'
-      },
-      {
-        file: 'dist/es/index.d.ts',
+        file: 'dist/index.d.ts',
         format: 'es'
       }
     ],

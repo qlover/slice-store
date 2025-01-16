@@ -6,13 +6,13 @@ export default {
   testEnvironment: 'jest-environment-jsdom',
   extensionsToTreatAsEsm: ['.ts', '.tsx'],
   projects: [
-    // {
-    //   ...tsJestConfig,
-    //   displayName: 'slice-store',
-    //   testMatch: tsJestConfig.testMatch.map(
-    //     (item) => '<rootDir>/packages/slice-store/' + item
-    //   )
-    // },
+    {
+      ...tsJestConfig,
+      displayName: 'slice-store',
+      testMatch: tsJestConfig.testMatch.map(
+        (item) => '<rootDir>/packages/slice-store/' + item
+      )
+    },
     {
       ...tsJestConfig,
       displayName: 'slice-store-react',
