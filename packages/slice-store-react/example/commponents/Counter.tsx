@@ -1,5 +1,5 @@
 import { SliceStore } from '@qlover/slice-store';
-import { useSliceStore } from '../useSliceStore';
+import { useSliceStore } from '../../src/useSliceStore';
 
 class AppStore extends SliceStore<{ count: number }> {
   constructor() {

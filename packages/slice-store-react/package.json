@@ -25,7 +25,8 @@
   },
   "homepage": "https://github.com/qlover/slice-store-react#readme",
   "scripts": {
-    "build": "vite build && npm run build:dts",
+    "dev": "vite",
+    "build": "npm run build:dts",
     "build:dts": "rollup -c",
     "prettier": "prettier packages --write",
     "eslint": "eslint packages --ext .js,.ts --cache --fix",
