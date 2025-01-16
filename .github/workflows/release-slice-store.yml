@@ -37,17 +37,17 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install -g yarn
-          yarn
+          npm install -g pnpm
+          pnpm
 
       - name: Lint
-        run: yarn lint
+        run: pnpm lint
 
       - name: Test
-        run: yarn test
+        run: pnpm test
 
       - name: Build dist
-        run: yarn build
+        run: pnpm build
 
       - name: Create release PR
         run: npm run release-pr:packages/slice-store
@@ -84,17 +84,17 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install -g yarn
-          yarn
+          npm install -g pnpm
+          pnpm
 
       - name: Lint
-        run: yarn lint
+        run: pnpm lint
 
       - name: Test
-        run: yarn test
+        run: pnpm test
 
       - name: Build dist
-        run: yarn build
+        run: pnpm build
 
       - name: Create tag and publish
         run: npm run release:packages/slice-store

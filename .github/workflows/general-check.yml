@@ -28,17 +28,17 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install -g yarn
-          yarn
+          npm install -g pnpm
+          pnpm
 
       - name: Lint
-        run: yarn lint
+        run: pnpm lint
 
       - name: Test
-        run: yarn test
+        run: pnpm test
 
       - name: Build dist
-        run: yarn build
+        run: pnpm build
 
       # check packages
       # - name: Check packages
