@@ -4,7 +4,8 @@ class AppStore extends SliceStore<number> {
   constructor() {
     super(() => 1);
   }
-  inc() {
+
+  inc(): void {
     this.emit(this.state + 1);
   }
 }

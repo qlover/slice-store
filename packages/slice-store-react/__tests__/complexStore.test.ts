@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react';
 import { useSliceStore } from '../src';
 import { SliceStore } from '@qlover/slice-store';
 

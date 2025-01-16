@@ -1,13 +1,13 @@
 export type Selector<T, K> = (state: T) => K;
 export type Listener<T> = (value: T) => void;
 export type ObserverItem<T> = {
-  selector?: Selector<T, any>;
-  listener: Listener<any>;
+  selector?: Selector<T, unknown>;
+  listener: Listener<unknown>;
 };
 export type CompareFunction<T> = (a: T, b: T) => boolean;
 export class Observer<T> {
   private observers: Array<ObserverItem<T>> = [];
-  private lastValues: Map<ObserverItem<T>, any> = new Map();
+  private lastValues: Map<ObserverItem<T>, unknown> = new Map();
 
   private compare: CompareFunction<T> = Object.is;
 
@@ -15,14 +15,14 @@ export class Observer<T> {
     selectorOrListener: Selector<T, K> | Listener<T>,
     listener?: Listener<K>
   ): () => void {
-    let selector: Selector<T, any> | undefined;
-    let actualListener: Listener<any>;
+    let selector: Selector<T, unknown> | undefined;
+    let actualListener: Listener<unknown>;
 
     if (typeof selectorOrListener === 'function' && listener) {
       selector = selectorOrListener as Selector<T, K>;
-      actualListener = listener;
+      actualListener = listener as Listener<unknown>;
     } else {
-      actualListener = selectorOrListener as Listener<T>;
+      actualListener = selectorOrListener as Listener<unknown>;
     }
 
     const observer: ObserverItem<T> = { selector, listener: actualListener };
@@ -48,7 +48,7 @@ export class Observer<T> {
             : this.lastValues.get(observer);
 
         if (typeof this.compare === 'function') {
-          if (!this.compare(newSelectedValue, lastSelectedValue)) {
+          if (!this.compare(newSelectedValue as T, lastSelectedValue as T)) {
             this.lastValues.set(observer, newSelectedValue);
             listener(newSelectedValue);
           }

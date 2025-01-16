@@ -1,8 +1,7 @@
 import globals from 'globals';
 import jest from 'eslint-plugin-jest';
 import * as eslintChain from '@qlover/fe-standard/eslint/index.js';
-import reactHooks from 'eslint-plugin-react-hooks';
-import reactRefresh from 'eslint-plugin-react-refresh';
+import reactEslint from './packages/slice-store-react/eslint.config.js';
 
 const { createCommon, createTslintRecommended, chainEnv } = eslintChain;
 const allGlobals = {
@@ -11,41 +10,13 @@ const allGlobals = {
   ...globals.jest
 };
 
-function createBrowserConfig() {
-  return chainEnv({
-    allGlobals,
-    files: ['packages/slice-store/**/*.ts'],
-    languageOptions: {
-      globals: globals.browser
-    }
-  });
-}
-
-function createReactConfig() {
-  return {
-    files: ['packages/slice-store-react/**/*.{tsx}'],
-    languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser
-    },
-    plugins: {
-      'react-hooks': reactHooks,
-      'react-refresh': reactRefresh
-    },
-    rules: {
-      ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true }
-      ]
-    }
-  };
-}
-
 function createJESTConfig() {
   const config = chainEnv({
     allGlobals,
-    files: ['packages/**/__tests__/*.test.ts'],
+    files: [
+      'packages/**/__tests__/*.test.ts',
+      'packages/**/__tests__/*.test.tsx'
+    ],
     plugins: {
       jest
     },
@@ -68,14 +39,15 @@ export default [
     ignores: ['**/dist/**', '**/build/**', '**/node_modules/**', 'templates/**']
   },
   // common js and ts
-  createCommon(),
-  createTslintRecommended(['packages/**/*.ts']),
-  // browser
-  createBrowserConfig(),
-  // node
-  // createNodeConfig(),
-  // react
-  createReactConfig(),
+  createCommon(['packages/**/*.{js,jsx}']),
+  // createTslintRecommended(['packages/**/*.{ts,tsx}']),
+  ...reactEslint.map((config) => {
+    if (config.languageOptions?.globals) {
+      return chainEnv({ allGlobals, ...config });
+    }
+    return config;
+  }),
+
   // jest
   createJESTConfig()
 ];
