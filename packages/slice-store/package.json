@@ -18,7 +18,8 @@
   "files": [
     "dist",
     "package.json",
-    "README.md"
+    "README.md",
+    "README_EN.md"
   ],
   "repository": {
     "type": "github",
