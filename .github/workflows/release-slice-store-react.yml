@@ -50,7 +50,7 @@ jobs:
         run: pnpm build
 
       - name: Create release PR
-        run: npm run release-pr:packages/slice-store-react
+        run: npm run release-pr:slice-store-react
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN}}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN}}
@@ -97,7 +97,7 @@ jobs:
         run: pnpm build
 
       - name: Create tag and publish
-        run: npm run release:packages/slice-store-react
+        run: npm run release:slice-store-react
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN}}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN}}
