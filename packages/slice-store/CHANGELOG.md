@@ -1,5 +1,12 @@
 
 
+## [1.2.4](https://github.com/qlover/slice-store/compare/slice-store-v1.2.3...slice-store-v1.2.4) (2025-01-16)
+
+
+### Documentation
+
+* slice-store readme ([#16](https://github.com/qlover/slice-store/issues/16)) ([677e1d5](https://github.com/qlover/slice-store/commit/677e1d591fa1bcd2bfbca13722c44ef229a171d4))
+
 ## 1.2.3 (2025-01-16)
 
 
