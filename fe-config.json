@@ -1,0 +1,9 @@
+{
+  "protectedBranches": ["main", "develop", "v1.0.10"],
+  "release": {
+    "packagesDirectories": [
+      "packages/slice-store",
+      "packages/slice-store-react"
+    ]
+  }
+}

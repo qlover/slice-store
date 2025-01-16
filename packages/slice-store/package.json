@@ -1,0 +1,52 @@
+{
+  "name": "@qlover/slice-store",
+  "version": "1.2.0",
+  "description": "A simple and fast state management",
+  "type": "module",
+  "private": false,
+  "main": "dist/index.cjs",
+  "module": "dist/index.es.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.es.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "package.json",
+    "README.md"
+  ],
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/qlover/slice-store"
+  },
+  "homepage": "https://github.com/qlover/slice-store#readme",
+  "scripts": {
+    "build": "rollup -c",
+    "prettier": "prettier packages --write",
+    "eslint": "eslint packages --ext .js,.ts --cache --fix",
+    "lint": "eslint packages --ext .js,.ts --cache --fix",
+    "test": "jest",
+    "reinit": "fe-reinit",
+    "clean": "fe-clean",
+    "commit": "fe-commit",
+    "release": "fe-release"
+  },
+  "keywords": [
+    "javascript",
+    "store",
+    "slice-store"
+  ],
+  "author": "qlover",
+  "license": "ISC",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devEngines": {
+    "node": ">=18.19.0"
+  }
+}
