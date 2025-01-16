@@ -1,6 +1,6 @@
 {
   "name": "@qlover/slice-store-react",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "A SliceStore for React",
   "type": "module",
   "private": false,
