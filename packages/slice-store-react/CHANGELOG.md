@@ -1,5 +1,12 @@
 
 
+## [1.2.4](https://github.com/qlover/slice-store/compare/slice-store-react-v1.2.3...slice-store-react-v1.2.4) (2025-01-21)
+
+
+### Bug Fixes
+
+* slice-store-react pkg import type ([#20](https://github.com/qlover/slice-store/issues/20)) ([a3d235b](https://github.com/qlover/slice-store/commit/a3d235b5e881c5ad563678ca10995302b949395f))
+
 ## [1.2.3](https://github.com/qlover/slice-store/compare/slice-store-react-v1.2.2...slice-store-react-v1.2.3) (2025-01-16)
 
 
