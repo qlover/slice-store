@@ -1,4 +1,9 @@
+# Changelog
 
+## <small>1.2.6 (2025-03-25)</small>
+
+* fix: fe release pr no command (#23) ([27d65c7](https://github.com/qlover/slice-store/commit/27d65c7)), closes [#23](https://github.com/qlover/slice-store/issues/23)
+* feat: slice store maker (#22) ([f958d0d](https://github.com/qlover/slice-store/commit/f958d0d)), closes [#22](https://github.com/qlover/slice-store/issues/22)
 
 ## [1.2.4](https://github.com/qlover/slice-store/compare/slice-store-react-v1.2.3...slice-store-react-v1.2.4) (2025-01-21)
 
