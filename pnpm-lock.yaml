@@ -12,7 +12,7 @@ importers:
         specifier: ^0.2.0
         version: 0.2.0
       '@qlover/fe-scripts':
-        specifier: ^0.10.1
+        specifier: latest
         version: 0.10.1(@types/node@22.10.6)(typescript@5.4.5)
       '@qlover/fe-standard':
         specifier: ^0.0.4
@@ -479,8 +479,8 @@ packages:
     resolution: {integrity: sha512-oRUn7CcpuRK3sCzAaTF8FxtS4Czo47N3jbAOo2+QqGajt6oqlax6WN9J91+IBsXrGvZZ8a2cdKXm9Y3Lt6EGQg==}
     deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
 
-  '@qlover/scripts-context@0.0.6':
-    resolution: {integrity: sha512-dGSpz2aWba5XUbu1EmlE6ZC4RIHG9I2oAT//eYJbKsM4jLF+o0EJTrXw862S/aT4N2v6xMQtPuLXyGYMbJeXBA==}
+  '@qlover/scripts-context@0.0.7':
+    resolution: {integrity: sha512-EsO7QJg0wl4dtzJugRhqgFsoPl9856XkJtRA+YNbSYCXtAP2bS51VvwKUHHxqKVmTYOWgOmhugb3L7aIYASUCQ==}
 
   '@qlover/slice-store@1.2.4':
     resolution: {integrity: sha512-mBKXKd11dOp3qtnXSEv4FH6LjyOzrbEudiqN4PCsJoa9aJlKYZ9T6oVU5oWu81emrf7A4ya46+h57Pgf3ABmfw==}
@@ -2769,7 +2769,7 @@ snapshots:
       '@octokit/rest': 21.1.0
       '@qlover/env-loader': 0.0.1
       '@qlover/fe-utils': 1.1.4
-      '@qlover/scripts-context': 0.0.6(typescript@5.4.5)
+      '@qlover/scripts-context': 0.0.7(typescript@5.4.5)
       commander: 11.1.0
       commitizen: 4.3.1(@types/node@22.10.6)(typescript@5.4.5)
       ignore: 6.0.2
@@ -2785,7 +2785,7 @@ snapshots:
       lodash: 4.17.21
       merge: 2.1.1
 
-  '@qlover/scripts-context@0.0.6(typescript@5.4.5)':
+  '@qlover/scripts-context@0.0.7(typescript@5.4.5)':
     dependencies:
       '@qlover/fe-utils': 1.1.4
       chalk: 5.4.1
