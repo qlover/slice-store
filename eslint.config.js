@@ -1,53 +1,88 @@
+import js from '@eslint/js';
 import globals from 'globals';
-import jest from 'eslint-plugin-jest';
+import vitest from 'eslint-plugin-vitest';
 import * as eslintChain from '@qlover/fe-standard/eslint/index.js';
-import reactEslint from './packages/slice-store-react/eslint.config.js';
+import * as feDev from '@qlover/eslint-plugin-fe-dev';
+import reactHooks from 'eslint-plugin-react-hooks';
+import reactRefresh from 'eslint-plugin-react-refresh';
+import tseslint from 'typescript-eslint';
 
-const { createCommon, createTslintRecommended, chainEnv } = eslintChain;
+const { createCommon, chainEnv } = eslintChain;
+
 const allGlobals = {
   ...globals.browser,
   ...globals.node,
-  ...globals.jest
+  ...globals.vitest,
+  ...vitest.environments.env.globals
 };
 
-function createJESTConfig() {
+function createVitestConfig() {
   const config = chainEnv({
     allGlobals,
     files: [
-      'packages/**/__tests__/*.test.ts',
-      'packages/**/__tests__/*.test.tsx'
+      'packages/**/__tests__/**/*.test.ts',
+      'packages/**/__tests__/**/*.test.tsx'
     ],
     plugins: {
-      jest
+      vitest
     },
     languageOptions: {
       globals: {
-        // ...globals.browser,
+        ...globals.browser,
         ...globals.node,
-        ...globals.jest
+        ...vitest.environments.env.globals
       }
     }
   });
   return config;
 }
 
+const commonConfig = createCommon();
+
 /**
  * @type {import('eslint').Linter.Config[]}
  */
-export default [
+export default tseslint.config([
   {
-    ignores: ['**/dist/**', '**/build/**', '**/node_modules/**', 'templates/**']
+    ignores: ['**/dist/**', '**/build/**', '**/node_modules/**']
   },
-  // common js and ts
-  createCommon(['packages/**/*.{js,jsx}']),
-  // createTslintRecommended(['packages/**/*.{ts,tsx}']),
-  ...reactEslint.map((config) => {
-    if (config.languageOptions?.globals) {
-      return chainEnv({ allGlobals, ...config });
-    }
-    return config;
-  }),
 
-  // jest
-  createJESTConfig()
-];
+  {
+    files: ['packages/**/*.{js,jsx,ts,tsx}'],
+    extends: [
+      js.configs.recommended,
+      ...tseslint.configs.recommended,
+      commonConfig
+    ],
+    plugins: {
+      'fe-dev': feDev
+    },
+    rules: {
+      'fe-dev/ts-class-method-return': 'error',
+      '@typescript-eslint/explicit-function-return-type': 'off',
+      '@typescript-eslint/no-unused-vars': 'error'
+    }
+  },
+
+  {
+    files: ['packages/slice-store-react/**/*.{ts,tsx}'],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: globals.browser
+    },
+    plugins: {
+      'react-hooks': reactHooks,
+      'react-refresh': reactRefresh
+    },
+    rules: {
+      ...reactHooks.configs.recommended.rules,
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true }
+      ]
+    }
+  },
+
+  // vitest
+  createVitestConfig()
+]);

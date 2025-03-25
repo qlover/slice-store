@@ -31,7 +31,7 @@
     "prettier": "prettier packages --write",
     "eslint": "eslint packages --ext .js,.ts --cache --fix",
     "lint": "eslint packages --ext .js,.ts --cache --fix",
-    "test": "jest",
+    "test": "vitest run",
     "reinit": "fe-reinit",
     "clean": "fe-clean",
     "commit": "fe-commit",

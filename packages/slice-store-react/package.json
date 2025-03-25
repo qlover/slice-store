@@ -9,9 +9,9 @@
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.es.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -33,7 +33,7 @@
     "prettier": "prettier packages --write",
     "eslint": "eslint packages --ext .js,.ts --cache --fix",
     "lint": "eslint packages --ext .js,.ts --cache --fix",
-    "test": "jest",
+    "test": "vitest run",
     "reinit": "fe-reinit",
     "clean": "fe-clean",
     "commit": "fe-commit",
@@ -53,14 +53,11 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
-    "@qlover/eslint-plugin-fe-dev": "^0.2.0",
     "@testing-library/react-hooks": "^8.0.1",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react-swc": "^3.5.0",
-    "eslint": "^9.17.0",
-    "vite": "^6.0.5",
-    "vite-plugin-dts": "^4.5.0"
+    "vite": "^6.0.5"
   },
   "dependencies": {
     "@qlover/slice-store": "latest",
