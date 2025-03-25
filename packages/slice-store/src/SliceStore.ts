@@ -84,6 +84,8 @@ export class SliceStore<T> extends Observer<T> {
     /**
      * The state constructor, used to create the initial state
      *
+     * **But maker not supported pass parameters, so it's not recommended to pass parameters to the constructor**
+     *
      * @example
      * ```typescript
      * class TodoState {
