@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 export type ConstructorType<T, Args extends unknown[]> =
   | (new (...args: Args) => T)
   | ((...args: Args) => T);

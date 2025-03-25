@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@qlover/eslint-plugin-fe-dev": "^0.2.0",
-    "@qlover/fe-scripts": "^0.10.1",
+    "@qlover/fe-scripts": "latest",
     "@qlover/fe-standard": "^0.0.4",
     "@rollup/plugin-commonjs": "^28.0.1",
     "@rollup/plugin-json": "^6.1.0",
