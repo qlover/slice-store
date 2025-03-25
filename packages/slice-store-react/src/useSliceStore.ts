@@ -1,4 +1,4 @@
-import { SliceStore } from '@qlover/slice-store';
+import { type Listener, SliceStore } from '@qlover/slice-store';
 import { useState, useEffect } from 'react';
 
 export function useSliceStore<T, S = T>(
@@ -10,10 +10,9 @@ export function useSliceStore<T, S = T>(
   );
 
   useEffect(() => {
-    const unsubscribe = store.observe((state: T) => {
-      const newState = selector ? selector(state) : (state as unknown as S);
-      setStoreState(newState);
-    });
+    const unsubscribe = selector
+      ? store.observe(selector, setStoreState)
+      : store.observe(setStoreState as unknown as Listener<T>);
 
     return () => {
       unsubscribe();
