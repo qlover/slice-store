@@ -1,4 +1,4 @@
-# Changelog
+# @qlover/slice-store
 
 ## <small>1.2.6 (2025-03-25)</small>
 

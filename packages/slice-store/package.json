@@ -5,13 +5,14 @@
   "type": "module",
   "private": false,
   "main": "dist/index.cjs",
-  "module": "dist/index.es.js",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
+  "browser": "dist/index.iife.js",
   "exports": {
     ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.es.js",
-      "types": "./dist/index.d.ts"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -23,22 +24,15 @@
   ],
   "repository": {
     "type": "github",
-    "url": "https://github.com/qlover/slice-store"
+    "url": "https://github.com/qlover/slice-store",
+    "directory": "packages/slice-store"
   },
   "homepage": "https://github.com/qlover/slice-store#readme",
   "scripts": {
-    "build": "rollup -c",
-    "prettier": "prettier packages --write",
-    "eslint": "eslint packages --ext .js,.ts --cache --fix",
-    "lint": "eslint packages --ext .js,.ts --cache --fix",
-    "test": "vitest run",
-    "reinit": "fe-reinit",
-    "clean": "fe-clean",
-    "commit": "fe-commit",
-    "release": "fe-release"
+    "build": "tsup"
   },
   "keywords": [
-    "javascript",
+    "@qlover/slice-store",
     "store",
     "slice-store"
   ],

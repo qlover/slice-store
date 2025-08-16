@@ -26,7 +26,8 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # local env files
-.env*.local
+.env*.*
+!.env.template
 
 # vercel
 .vercel
@@ -35,10 +36,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-/package-lock.json
-/yarn.lock
 .husky
-# /pnpm-lock.yaml
 public/robots.txt
 public/sitemap*.xml
 dist
@@ -48,3 +46,12 @@ dist
 
 # local output dir
 *.output/
+
+# lock file
+package-lock.json
+yarn.lock
+
+rollup.config-*.*js
+
+.nx/cache
+.nx/workspace-data
