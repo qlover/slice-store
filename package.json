@@ -43,12 +43,12 @@
     "@microsoft/api-extractor": "^7.52.8",
     "@nx/esbuild": "20.6.4",
     "@nx/js": "20.6.4",
+    "@qlover/code2markdown": "^1.0.1",
     "@qlover/env-loader": "^0.3.0",
     "@qlover/eslint-plugin-fe-dev": "^0.1.0",
-    "@qlover/code2markdown": "^1.0.1",
+    "@qlover/fe-release": "^3.0.0",
     "@qlover/fe-scripts": "^1.0.0",
     "@qlover/fe-standard": "^0.0.4",
-    "@qlover/fe-release": "^3.0.0",
     "@qlover/scripts-context": "^1.0.0",
     "@rollup/plugin-commonjs": "^28.0.1",
     "@rollup/plugin-json": "^6.1.0",
@@ -58,6 +58,7 @@
     "@swc-node/register": "~1.9.1",
     "@swc/core": "~1.5.7",
     "@swc/helpers": "~0.5.11",
+    "@testing-library/react": "^16.3.0",
     "@types/lodash": "^4.17.16",
     "@types/node": "^22.9.0",
     "cz-conventional-changelog": "^3.3.0",
@@ -70,6 +71,7 @@
     "glob": "^11.0.3",
     "globals": "^15.14.0",
     "husky": "^9.1.7",
+    "jsdom": "^26.1.0",
     "nx": "20.6.4",
     "prettier": "^3.5.3",
     "rimraf": "^5.0.5",
@@ -83,7 +85,7 @@
     "typescript": "~5.4.5",
     "typescript-eslint": "^8.18.0",
     "vite": "^6.1.0",
-    "vitest": "^3.0.5"  
+    "vitest": "^3.0.5"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

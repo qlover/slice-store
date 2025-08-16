@@ -1,3 +1,4 @@
+import path from 'path';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
@@ -8,7 +9,7 @@ export default defineConfig({
   //   })
   // ],
   test: {
-    environment: 'node',
+    environment: 'jsdom',
     globals: true,
     watch: false,
     include: ['packages/**/__tests__/**/*.test.{ts,tsx}'],
@@ -20,10 +21,13 @@ export default defineConfig({
       '**/.github/**',
       '**/.husky/**',
       '**/.vscode/**',
-      '**/.nx/**',
+      '**/.nx/**'
     ],
     alias: {
-      '@qlover/slice-store': './packages/slice-store/__mocks__/index.ts',
+      '@qlover/slice-store': path.resolve(
+        __dirname,
+        './packages/slice-store/__mocks__/index.ts'
+      )
     }
   }
 });
