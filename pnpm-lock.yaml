@@ -123,7 +123,7 @@ importers:
         specifier: ^5.0.5
         version: 5.0.10
       rollup:
-        specifier: ^4.24.2
+        specifier: ^4.46.2
         version: 4.46.2
       rollup-plugin-delete:
         specifier: ^2.1.0

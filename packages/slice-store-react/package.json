@@ -5,12 +5,12 @@
   "type": "module",
   "private": false,
   "main": "dist/index.js",
-  "module": "dist/index.es.js",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.es.js",
+      "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"
@@ -28,18 +28,10 @@
   "homepage": "https://github.com/qlover/slice-store#readme",
   "scripts": {
     "dev": "vite",
-    "build": "npm run build:dts",
-    "build:dts": "rollup -c",
-    "prettier": "prettier packages --write",
-    "eslint": "eslint packages --ext .js,.ts --cache --fix",
-    "lint": "eslint packages --ext .js,.ts --cache --fix",
-    "test": "vitest run",
-    "reinit": "fe-reinit",
-    "clean": "fe-clean",
-    "commit": "fe-commit",
-    "release": "fe-release"
+    "build": "tsup"
   },
   "keywords": [
+    "@qlover/slice-store-react",
     "slice-store",
     "react slice-store"
   ],
