@@ -2,7 +2,6 @@ import js from '@eslint/js';
 import globals from 'globals';
 import vitest from 'eslint-plugin-vitest';
 import * as eslintChain from '@qlover/fe-standard/eslint/index.js';
-import * as feDev from '@qlover/eslint-plugin-fe-dev';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
@@ -54,11 +53,7 @@ export default tseslint.config([
       ...tseslint.configs.recommended,
       commonConfig
     ],
-    plugins: {
-      'fe-dev': feDev
-    },
     rules: {
-      'fe-dev/ts-class-method-return': 'error',
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/no-unused-vars': 'error'
     }
