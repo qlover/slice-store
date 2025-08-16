@@ -47,7 +47,7 @@ jobs:
       - run: pnpm rebuild
 
       - name: Release Pull Request
-        run: fe-release -V -P --githubPR.push-change-labels --workspaces.change-labels=${{join(github.event.pull_request.labels.*.name,',')}} --changelog.ignore-non-updated-packages
+        run: npx fe-release -V -P --githubPR.push-change-labels --workspaces.change-labels=${{join(github.event.pull_request.labels.*.name,',')}} --changelog.ignore-non-updated-packages
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN}}
 
@@ -90,7 +90,7 @@ jobs:
       - run: pnpm rebuild
 
       - name: Create tag and publish
-        run: fe-release -V --changelog.skip-changeset --workspaces.change-labels=${{join(github.event.pull_request.labels.*.name,',')}}
+        run: npx fe-release -V --changelog.skip-changeset --workspaces.change-labels=${{join(github.event.pull_request.labels.*.name,',')}}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN}}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN}}
