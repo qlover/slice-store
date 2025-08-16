@@ -39,7 +39,7 @@ jobs:
 
       # Only run package checks when targeting master
       - name: Check packages
-        if: github.event.pull_request.base.ref == 'master'
+        if: github.event.pull_request.base.ref == 'main'
         run: |
           git fetch origin ${{ github.base_ref }}
           pnpm run check-packages -V -r ${{ github.repository }} -b ${{ github.base_ref }} -n ${{ github.event.pull_request.number }}
