@@ -1,8 +1,6 @@
 {
   "extends": "@qlover/fe-standard/config/tsconfig.base.json",
   "compilerOptions": {
-    "jsx": "react-jsx",
-    "rootDir": "./",
     "types": ["vitest/globals"]
   },
   "include": ["./packages"],
