@@ -33,8 +33,8 @@ importers:
         specifier: 20.6.4
         version: 20.6.4(@babel/traverse@7.28.3)(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@5.4.5))(@swc/core@1.5.29(@swc/helpers@0.5.17))(nx@20.6.4(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@5.4.5))(@swc/core@1.5.29(@swc/helpers@0.5.17)))
       '@qlover/code2markdown':
-        specifier: ^1.0.1
-        version: 1.0.1
+        specifier: ^1.1.2
+        version: 1.1.2
       '@qlover/env-loader':
         specifier: ^0.3.0
         version: 0.3.0
@@ -42,17 +42,17 @@ importers:
         specifier: ^0.1.0
         version: 0.1.0
       '@qlover/fe-release':
-        specifier: ^3.0.0
-        version: 3.0.0(typescript@5.4.5)
+        specifier: ^3.1.2
+        version: 3.1.2(typescript@5.4.5)
       '@qlover/fe-scripts':
-        specifier: ^1.0.0
-        version: 1.0.0(@types/node@22.17.2)(typescript@5.4.5)
+        specifier: ^1.0.2
+        version: 1.0.2(@types/node@22.17.2)(typescript@5.4.5)
       '@qlover/fe-standard':
         specifier: ^0.0.4
         version: 0.0.4
       '@qlover/scripts-context':
-        specifier: ^1.0.0
-        version: 1.0.0(typescript@5.4.5)
+        specifier: ^1.1.3
+        version: 1.1.3(typescript@5.4.5)
       '@rollup/plugin-commonjs':
         specifier: ^28.0.1
         version: 28.0.6(rollup@4.46.2)
@@ -1469,8 +1469,8 @@ packages:
     resolution: {integrity: sha512-QNqXyfVS2wm9hweSYD2O7F0G06uurj9kZ96TRQE5Y9hU7+tgdZwIkbAKc5Ocy1HxEY2kuDQa6cQ1WRs/O5LFKA==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
 
-  '@qlover/code2markdown@1.0.1':
-    resolution: {integrity: sha512-KrImhx/TIF4RElM+nJLDcN1j1PT7wGwnhmNVBlUzUd19p4g/IUgGm2MWFRbCERbwTu0btLcJFX2kOa12Ezitzw==}
+  '@qlover/code2markdown@1.1.2':
+    resolution: {integrity: sha512-g9NCLQjKdybuVmRZNqhUrbT664Tba/wLSHMO3TBYFXVEpUl5R+/MG/S6mN1L7oig0YUwjkTVLh/U/tS36qt+NQ==}
     hasBin: true
 
   '@qlover/env-loader@0.3.0':
@@ -1480,28 +1480,25 @@ packages:
     resolution: {integrity: sha512-CC7/Y8QQV10XvKwSWvoeChndGWhJgiAoRf5qXuxQSh4FPFAZs+ExruoD/p+UR0NrAfiGd0zGKAPhE7mXYxOXTw==}
     engines: {node: '>=10'}
 
-  '@qlover/fe-corekit@1.5.0':
-    resolution: {integrity: sha512-sL2cJqZbZUlpWEm9kCc3wLYK96wVTjPD1EEs5oTkHiCHnO+UGYDlgW92/c0jMJMlqXox4xKA+3ojzmK8qRFnkg==}
+  '@qlover/fe-corekit@2.1.0':
+    resolution: {integrity: sha512-rckj7nx21MFhael3dBpC1xHd83Wv9PGEOAYhHa5uDfizUru18sDDlseYlzpDI4KpRL34BMLoE0fqT91bLyJxTQ==}
 
-  '@qlover/fe-corekit@2.0.0':
-    resolution: {integrity: sha512-273Wn2FKvHACJwI+BFwsGt9ou5Bfm+2zTAUYvdH9mg6iRWSSGa92lyvu8eCyP5p6Y+RTY6MADm/b+MRqTQ9llQ==}
-
-  '@qlover/fe-release@3.0.0':
-    resolution: {integrity: sha512-JJB8KDfQZ1epjCrIX9+jWGIzVFNJLvtsHQUZCugBltiBgB9Vj+SDA2ZkObo7LGtsQr3KbFFWcj0HLcU5zOx3MQ==}
+  '@qlover/fe-release@3.1.2':
+    resolution: {integrity: sha512-xxMxzOamH9LiFYV0xUYDN3h7MxpHG+gVArDQNhcit61ZWpr6ZqlUk88YtR/bUY+hjCUfkQAwuZPtamSZ4OCSuQ==}
     hasBin: true
 
-  '@qlover/fe-scripts@1.0.0':
-    resolution: {integrity: sha512-WzlkEIT70ygJ+gXSVwWLtRQGB5MogXsknEV7Sd30M67e6r2lDkALbJT+I1HeLfZjziTNsq5Hfc9XvlHx7DA9Yw==}
+  '@qlover/fe-scripts@1.0.2':
+    resolution: {integrity: sha512-htjWz7KqpiyvAXpGBazPi8IRxjYZSIKw3ctcb0Zk1Izcrzjmqb++WBjXrX4vvpiGnIhrlHcJ9PeRbNGq8mjErg==}
     hasBin: true
 
   '@qlover/fe-standard@0.0.4':
     resolution: {integrity: sha512-tKkilDE1IRaFpt6koWLropb9TPRILX+U97td2k669Vcei9OXaDNytPPOFjVz7b2jhB8QyJSMBotlMwDhJoK3Mg==}
 
-  '@qlover/logger@0.1.1':
-    resolution: {integrity: sha512-6D7ifewsS05vV5AHM3oRYEZuhg6/1GiP+hATL1jFlWvmR1mW07yXb19txTOtnjJpFetd7TSrmxuytok2YcBwCQ==}
+  '@qlover/logger@0.2.0':
+    resolution: {integrity: sha512-Q1kKvMm8+oJ9wZHTIaBeQGRxrX59oUi3OVX6faUWjrQRdOCf5SRTq9QNmPWmnexqCgqVrZY+ja6MMVPv8BwtMQ==}
 
-  '@qlover/scripts-context@1.0.0':
-    resolution: {integrity: sha512-+ZM6W3w/MmEOAVl5zUCAG1VsfgtwFjKN0/Vcec51V1zEkBHM/UHH9sZZMYQZG9IGc8TV44iazinBC4559StgnQ==}
+  '@qlover/scripts-context@1.1.3':
+    resolution: {integrity: sha512-5d4EIiTqKB8Dq9lMTSXAe2rv+33GWbxxujth0c9UdcPY9anG7wNiDKBjCgeeig7zgK7yHa0uUctFZO+y6z3NCg==}
 
   '@rolldown/pluginutils@1.0.0-beta.27':
     resolution: {integrity: sha512-+d0F4MKMCbeVUJwG96uQ4SgAznZNSq93I3V+9NHA4OpvqG8mRCpGdKmK8l/dl02h2CCDHwW2FqilnTyDcAnqjA==}
@@ -6294,10 +6291,10 @@ snapshots:
 
   '@pkgr/core@0.2.9': {}
 
-  '@qlover/code2markdown@1.0.1':
+  '@qlover/code2markdown@1.1.2':
     dependencies:
       '@qlover/env-loader': 0.3.0
-      '@qlover/scripts-context': 1.0.0(typescript@5.4.5)
+      '@qlover/scripts-context': 1.1.3(typescript@5.4.5)
       commander: 11.1.0
       fs-extra: 11.3.1
       handlebars: 4.7.8
@@ -6312,27 +6309,20 @@ snapshots:
 
   '@qlover/eslint-plugin-fe-dev@0.1.0': {}
 
-  '@qlover/fe-corekit@1.5.0':
+  '@qlover/fe-corekit@2.1.0':
     dependencies:
       '@types/lodash': 4.17.20
       axios: 1.11.0
     transitivePeerDependencies:
       - debug
 
-  '@qlover/fe-corekit@2.0.0':
-    dependencies:
-      '@types/lodash': 4.17.20
-      axios: 1.11.0
-    transitivePeerDependencies:
-      - debug
-
-  '@qlover/fe-release@3.0.0(typescript@5.4.5)':
+  '@qlover/fe-release@3.1.2(typescript@5.4.5)':
     dependencies:
       '@octokit/rest': 21.1.1
       '@qlover/env-loader': 0.3.0
-      '@qlover/fe-corekit': 2.0.0
-      '@qlover/logger': 0.1.1
-      '@qlover/scripts-context': 1.0.0(typescript@5.4.5)
+      '@qlover/fe-corekit': 2.1.0
+      '@qlover/logger': 0.2.0
+      '@qlover/scripts-context': 1.1.3(typescript@5.4.5)
       commander: 11.1.0
       find-workspaces: 0.3.1
       gitlog: 5.1.0
@@ -6341,13 +6331,13 @@ snapshots:
       - supports-color
       - typescript
 
-  '@qlover/fe-scripts@1.0.0(@types/node@22.17.2)(typescript@5.4.5)':
+  '@qlover/fe-scripts@1.0.2(@types/node@22.17.2)(typescript@5.4.5)':
     dependencies:
       '@commitlint/config-conventional': 19.8.1
       '@octokit/rest': 21.1.1
       '@qlover/env-loader': 0.3.0
-      '@qlover/fe-corekit': 2.0.0
-      '@qlover/scripts-context': 1.0.0(typescript@5.4.5)
+      '@qlover/fe-corekit': 2.1.0
+      '@qlover/scripts-context': 1.1.3(typescript@5.4.5)
       commander: 11.1.0
       commitizen: 4.3.1(@types/node@22.17.2)(typescript@5.4.5)
       find-workspaces: 0.3.1
@@ -6360,11 +6350,11 @@ snapshots:
 
   '@qlover/fe-standard@0.0.4': {}
 
-  '@qlover/logger@0.1.1': {}
+  '@qlover/logger@0.2.0': {}
 
-  '@qlover/scripts-context@1.0.0(typescript@5.4.5)':
+  '@qlover/scripts-context@1.1.3(typescript@5.4.5)':
     dependencies:
-      '@qlover/fe-corekit': 1.5.0
+      '@qlover/fe-corekit': 2.1.0
       chalk: 5.5.0
       cosmiconfig: 9.0.0(typescript@5.4.5)
     transitivePeerDependencies:
