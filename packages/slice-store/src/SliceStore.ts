@@ -1,5 +1,6 @@
-import { ConstructorType, factory } from './factory';
+import { factory } from './factory';
 import { Observer } from './Observer';
+import type { ConstructorType } from './factory';
 
 /**
  * State Slice Store
@@ -50,6 +51,7 @@ export class SliceStore<T> extends Observer<T> {
    * This property is read-only, returning a reference to the stored state object.
    * Note: This returns a reference, not a deep copy. Modifying the returned object's properties will directly affect the internal state.
    *
+   * @override
    * @example
    * ```typescript
    * const currentState = store.state;
@@ -58,7 +60,7 @@ export class SliceStore<T> extends Observer<T> {
    *
    * @returns {T} The current state object
    */
-  get state(): T {
+  public get state(): T {
     return this._state;
   }
 
@@ -110,6 +112,7 @@ export class SliceStore<T> extends Observer<T> {
    * Replace the entire state object, but will not trigger the observer notification.
    * This method is mainly used for initialization, not recommended for regular state updates.
    *
+   * @override
    * @deprecated Please use the constructor parameter or the emit method instead
    * @param {T} value - The new state object to set
    * @returns {this} The current instance, supporting method chaining
@@ -123,7 +126,7 @@ export class SliceStore<T> extends Observer<T> {
    * store.emit(initialState);
    * ```
    */
-  setDefaultState(value: T): this {
+  public setDefaultState(value: T): this {
     this._state = value;
     return this;
   }
@@ -134,6 +137,7 @@ export class SliceStore<T> extends Observer<T> {
    * This method will replace the current state object and trigger all subscribed observers.
    * The observers will receive the new and old state as parameters.
    *
+   * @override
    * @param {T} state - The new state object
    *
    * @example
@@ -150,7 +154,7 @@ export class SliceStore<T> extends Observer<T> {
    * userStore.emit({ name: 'Jane', age: 25 });
    * ```
    */
-  emit(state: T): void {
+  public emit(state: T): void {
     const lastValue = this.state;
     this._state = state;
     this.notify(this._state, lastValue);
@@ -167,6 +171,7 @@ export class SliceStore<T> extends Observer<T> {
    * - When you need to restore to the initial state
    * - When the current state is polluted or invalid
    *
+   * @override
    * @example
    * ```typescript
    * const store = new SliceStore(MyStateClass);
@@ -176,7 +181,7 @@ export class SliceStore<T> extends Observer<T> {
    *
    * @since 1.2.5
    */
-  reset(): void {
+  public reset(): void {
     this.emit(factory(this.maker));
   }
 }

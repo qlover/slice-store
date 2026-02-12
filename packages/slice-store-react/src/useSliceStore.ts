@@ -1,5 +1,6 @@
-import { type Listener, Selector, SliceStore } from '@qlover/slice-store';
+import { type Listener } from '@qlover/slice-store';
 import { useState, useEffect } from 'react';
+import type { Selector, SliceStore } from '@qlover/slice-store';
 
 export function useSliceStore<T, S = T>(
   store: SliceStore<T>,

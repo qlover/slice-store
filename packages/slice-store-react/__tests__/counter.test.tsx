@@ -1,8 +1,8 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import Counter from '../example/commponents/Counter';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { Counter } from '../example/commponents/Counter';
 
 describe('Counter', () => {
-  test('should render and increment/decrement counter', () => {
+  test('should render and increment/decrement counter', async () => {
     render(<Counter />);
 
     const count = screen.getByTestId('countText');
@@ -10,13 +10,13 @@ describe('Counter', () => {
     const decrementButton = screen.getByTestId('decrementButton');
 
     fireEvent.click(incrementButton);
-    expect(count.innerHTML).toBe('2');
+    await waitFor(() => expect(count.textContent).toBe('2'));
 
     fireEvent.click(decrementButton);
-    expect(count.innerHTML).toBe('1');
+    await waitFor(() => expect(count.textContent).toBe('1'));
 
     fireEvent.click(incrementButton);
     fireEvent.click(incrementButton);
-    expect(count.innerHTML).toBe('3');
+    await waitFor(() => expect(count.textContent).toBe('3'));
   });
 });

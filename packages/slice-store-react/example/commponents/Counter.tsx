@@ -6,18 +6,18 @@ class AppStore extends SliceStore<{ count: number }> {
     super(() => ({ count: 1 }));
   }
 
-  inc = () => {
+  public inc = () => {
     this.emit({ count: this.state.count + 1 });
   };
 
-  dec = () => {
+  public dec = () => {
     this.emit({ count: this.state.count - 1 });
   };
 }
 
 const appStore = new AppStore();
 
-export default function Counter() {
+export function Counter() {
   const { count } = useSliceStore(appStore);
 
   return (

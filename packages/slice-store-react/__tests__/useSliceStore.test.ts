@@ -1,6 +1,6 @@
+import { SliceStore } from '@qlover/slice-store';
 import { renderHook, act } from '@testing-library/react';
 import { useSliceStore } from '../src/useSliceStore';
-import { SliceStore } from '@qlover/slice-store';
 
 class CounterStore extends SliceStore<{
   count: number;
@@ -10,15 +10,15 @@ class CounterStore extends SliceStore<{
     super(() => ({ count: init, name: 'Counter' }));
   }
 
-  increment = (): void => {
+  public increment = (): void => {
     this.emit({ ...this.state, count: this.state.count + 1 });
   };
 
-  decrement = (): void => {
+  public decrement = (): void => {
     this.emit({ ...this.state, count: this.state.count - 1 });
   };
 
-  changeName = (newName: string): void => {
+  public changeName = (newName: string): void => {
     this.emit({ ...this.state, name: newName });
   };
 }
