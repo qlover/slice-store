@@ -1,0 +1,25 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+    "noEmit": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.test.tsbuildinfo",
+    "types": ["vitest/globals", "node"],
+    "skipLibCheck": true,
+    "rootDir": ".",
+    "moduleResolution": "bundler"
+  },
+  "include": [
+    "packages/**/__tests__/**/*.ts",
+    "packages/**/__tests__/**/*.tsx",
+    "packages/**/src/**/*.ts",
+    "packages/**/package.json"
+  ],
+  "exclude": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/ts-build/**",
+    "packages/create-app/templates/**"
+  ]
+}

@@ -55,3 +55,4 @@ rollup.config-*.*js
 
 .nx/cache
 .nx/workspace-data
+ts-build

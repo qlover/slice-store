@@ -1,18 +1,10 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "module": "ESNext",
-    "baseUrl": "./",
-    "outDir": "dist",
-    "skipLibCheck": true,
-    "moduleResolution": "Bundler",
-    "target": "ES2015",
-    "downlevelIteration": true,
-    "strict": true,
-    "allowUnusedLabels": false,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "types": ["vitest/globals"]
+    "composite": true,
+    "baseUrl": ".",
+    "tsBuildInfoFile": "ts-build/.tsbuildinfo"
   },
-  "include": ["src"],
+  "include": ["src", "__tests__", "tsup.config.ts"],
   "exclude": ["dist", "node_modules"]
 }

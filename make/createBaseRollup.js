@@ -1,11 +1,11 @@
-import resolve from '@rollup/plugin-node-resolve';
+import { readFileSync, rmSync } from 'fs';
+import { builtinModules } from 'module';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
+import resolve from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
 import dts from 'rollup-plugin-dts';
 import typescript from 'rollup-plugin-typescript2';
-import { builtinModules } from 'module';
-import { readFileSync, rmSync } from 'fs';
 
 function cleanBuildDir(buildDir) {
   rmSync(buildDir, { recursive: true, force: true });

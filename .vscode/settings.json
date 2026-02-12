@@ -5,5 +5,5 @@
   "editor.tabSize": 2,
   "jest.runMode": "on-demand",
   "tailwindCSS.rootFontSize": 10,
-  "vitest.rootConfig": "./vite.config.ts"
+  "vitest.rootConfig": "./vitest.config.ts"
 }

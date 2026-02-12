@@ -44,17 +44,20 @@
     "node": ">=18.19.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.17.0",
     "@testing-library/react-hooks": "^8.0.1",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react-swc": "^3.5.0",
-    "@testing-library/react": "^14.2.1",
-    "vite": "^6.0.5"
+    "@testing-library/react": "^16.3.2",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "vite": "^7.3.1"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
   },
   "dependencies": {
-    "@qlover/slice-store": "workspace:*",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "@qlover/slice-store": "workspace:*"
   }
 }
