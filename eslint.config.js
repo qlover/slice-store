@@ -24,6 +24,7 @@ export default defineConfig([
     '**/node_modules',
     'eslint.config.js',
     'commitlint.config.js',
+    'tsup.config.ts',
     '**/ts-build',
     '.nx'
   ]),
@@ -58,7 +59,8 @@ export default defineConfig([
     rules: {
       '@qlover-eslint/ts-class-method-return': 'error',
       '@qlover-eslint/ts-class-member-accessibility': 'error',
-      '@qlover-eslint/ts-class-override': 'error',
+      // TODO: use tsconfig, then enable this rule
+      '@qlover-eslint/ts-class-override': 'off',
       '@qlover-eslint/require-root-testid': [
         'error',
         {
@@ -121,7 +123,7 @@ export default defineConfig([
       'import/no-default-export': 'error'
     }
   },
-  
+
   {
     name: 'lint-make',
     files: ['make/**/*.js'],

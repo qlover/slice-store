@@ -1,6 +1,7 @@
 import { factory } from './factory';
-import { Observer } from './Observer';
 import type { ConstructorType } from './factory';
+import type { Listener, Observer, Selector } from './Observer';
+import type { SliceStoreInterface } from './SliceStoreInterface';
 
 /**
  * State Slice Store
@@ -38,12 +39,39 @@ import type { ConstructorType } from './factory';
  *
  * @template T - The type of the state
  */
-export class SliceStore<T> extends Observer<T> {
+export class SliceStore<T> implements SliceStoreInterface<T> {
   /**
    * The internal state object
    * @private
    */
   private _state: T;
+
+  /**
+   * Get the current state
+   *
+   * This property is read-only, returning a reference to the stored state object.
+   * Note: This returns a reference, not a deep copy. Modifying the returned object's properties will directly affect the internal state.
+   *
+   * @deprecated
+   * @example
+   * ```typescript
+   * const currentState = store.state;
+   * console.log(currentState);
+   * ```
+   *
+   * @returns {T} The current state object
+   */
+  public get state(): T {
+    return this.getState();
+  }
+
+  /**
+   * 兼容1.3.0-
+   * @deprecated use `set`
+   */
+  public emit(state: T): void {
+    this.set(state);
+  }
 
   /**
    * Get the current state
@@ -60,7 +88,7 @@ export class SliceStore<T> extends Observer<T> {
    *
    * @returns {T} The current state object
    */
-  public get state(): T {
+  public getState(): T {
     return this._state;
   }
 
@@ -100,35 +128,10 @@ export class SliceStore<T> extends Observer<T> {
      *
      * @since 1.2.5
      */
-    private maker: ConstructorType<T, unknown[]>
+    private maker: ConstructorType<T, unknown[]>,
+    protected observer: Observer<T>
   ) {
-    super();
     this._state = factory(maker);
-  }
-
-  /**
-   * Set the default state
-   *
-   * Replace the entire state object, but will not trigger the observer notification.
-   * This method is mainly used for initialization, not recommended for regular state updates.
-   *
-   * @override
-   * @deprecated Please use the constructor parameter or the emit method instead
-   * @param {T} value - The new state object to set
-   * @returns {this} The current instance, supporting method chaining
-   *
-   * @example
-   * ```typescript
-   * // Not recommended to use
-   * store.setDefaultState(initialState);
-   *
-   * // Recommended alternative
-   * store.emit(initialState);
-   * ```
-   */
-  public setDefaultState(value: T): this {
-    this._state = value;
-    return this;
   }
 
   /**
@@ -154,10 +157,10 @@ export class SliceStore<T> extends Observer<T> {
    * userStore.emit({ name: 'Jane', age: 25 });
    * ```
    */
-  public emit(state: T): void {
+  public set(state: T): void {
     const lastValue = this.state;
     this._state = state;
-    this.notify(this._state, lastValue);
+    this.observer.notify(this._state, lastValue);
   }
 
   /**
@@ -183,5 +186,24 @@ export class SliceStore<T> extends Observer<T> {
    */
   public reset(): void {
     this.emit(factory(this.maker));
+  }
+
+  /**
+   * @since 1.3.0
+   * @override
+   */
+  public observe<K = T>(
+    selectorOrListener: Selector<T, K> | Listener<T>,
+    listener?: Listener<K>
+  ): () => void {
+    return this.observer.observe<K>(selectorOrListener, listener);
+  }
+
+  /**
+   * @since 1.3.0
+   * @override
+   */
+  public clear(): void {
+    this.observer.clear();
   }
 }

@@ -1,15 +1,29 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "composite": true,
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "tsBuildInfoFile": "ts-build/.tsbuildinfo",
-    "jsx": "react-jsx",
-    "types": ["vite/client", "vitest/globals"],
     "baseUrl": ".",
+    "composite": true,
+    "rootDir": ".",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "outDir": "ts-build",
+    "tsBuildInfoFile": "ts-build/.tsbuildinfo",
+    "downlevelIteration": true,
+    "strict": true,
+    "allowUnusedLabels": false,
+    "noUnusedLocals": true,
+    "allowJs": true,
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@qlover/slice-store": ["../slice-store/src"]
     }
   },
-  "include": ["src", "example", "__tests__", "tsup.config.ts", "vite.config.ts"]
+  "include": [
+    "src/**/*",
+    "__tests__/**/*",
+    "example/**/*",
+    "*.config.ts",
+    "package.json"
+  ],
+  "exclude": ["dist", "node_modules", "ts-build"],
+  "references": [{ "path": "../slice-store" }]
 }

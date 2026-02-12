@@ -1,5 +1,5 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "composite": true,
     "noEmit": true,
@@ -10,16 +10,14 @@
     "moduleResolution": "bundler"
   },
   "include": [
-    "packages/**/__tests__/**/*.ts",
-    "packages/**/__tests__/**/*.tsx",
-    "packages/**/src/**/*.ts",
+    "packages/**/__tests__/**/*.{ts,tsx}",
+    "packages/**/src/**/*.{ts,tsx}",
     "packages/**/package.json"
   ],
   "exclude": [
     "**/node_modules/**",
     "**/dist/**",
     "**/build/**",
-    "**/ts-build/**",
-    "packages/create-app/templates/**"
+    "**/ts-build/**"
   ]
 }
