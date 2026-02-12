@@ -1,8 +1,8 @@
 import { factory } from './factory';
+import { Observer } from './Observer';
 import type { ConstructorType } from './factory';
-import type { Listener, Observer, Selector } from './Observer';
+import type { Listener, Selector, Unsubscribe } from './Observer';
 import type { SliceStoreInterface } from './SliceStoreInterface';
-
 /**
  * State Slice Store
  *
@@ -40,26 +40,11 @@ import type { SliceStoreInterface } from './SliceStoreInterface';
  * @template T - The type of the state
  */
 export class SliceStore<T> implements SliceStoreInterface<T> {
-  /**
-   * The internal state object
-   * @private
-   */
+  protected observer: Observer<T>;
   private _state: T;
 
   /**
-   * Get the current state
-   *
-   * This property is read-only, returning a reference to the stored state object.
-   * Note: This returns a reference, not a deep copy. Modifying the returned object's properties will directly affect the internal state.
-   *
    * @deprecated
-   * @example
-   * ```typescript
-   * const currentState = store.state;
-   * console.log(currentState);
-   * ```
-   *
-   * @returns {T} The current state object
    */
   public get state(): T {
     return this.getState();
@@ -129,8 +114,30 @@ export class SliceStore<T> implements SliceStoreInterface<T> {
      * @since 1.2.5
      */
     private maker: ConstructorType<T, unknown[]>,
-    protected observer: Observer<T>
+
+    /**
+     * The observer, used to notify all observers when the state changes
+     *
+     * You can override the Observer to implement your own logic
+     *
+     * @example Override the Observer's compare method to control state updates
+     * ```ts
+     * class MyObserver extends Observer<T> {
+     *   compare(a: T, b: T): boolean {
+     *     return a.name === b.name;
+     *   }
+     * }
+     *
+     * const myObserver = new MyObserver<T>();
+     * const myStore = new SliceStore<T>(MyStateClass, myObserver);
+     * ```
+     *
+     * @since 1.3.0
+     * @default new Observer<T>()
+     */
+    observer?: Observer<T>
   ) {
+    this.observer = observer ?? new Observer<T>();
     this._state = factory(maker);
   }
 
@@ -158,9 +165,9 @@ export class SliceStore<T> implements SliceStoreInterface<T> {
    * ```
    */
   public set(state: T): void {
-    const lastValue = this.state;
+    const lastValue = this.getState();
     this._state = state;
-    this.observer.notify(this._state, lastValue);
+    this.observer.notify(state, lastValue);
   }
 
   /**
@@ -185,7 +192,7 @@ export class SliceStore<T> implements SliceStoreInterface<T> {
    * @since 1.2.5
    */
   public reset(): void {
-    this.emit(factory(this.maker));
+    this.set(factory(this.maker));
   }
 
   /**
@@ -195,7 +202,7 @@ export class SliceStore<T> implements SliceStoreInterface<T> {
   public observe<K = T>(
     selectorOrListener: Selector<T, K> | Listener<T>,
     listener?: Listener<K>
-  ): () => void {
+  ): Unsubscribe {
     return this.observer.observe<K>(selectorOrListener, listener);
   }
 

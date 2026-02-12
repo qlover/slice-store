@@ -1,10 +1,11 @@
+export type Unsubscribe = () => void;
+
 /**
  * State selector function type
  * Selects specific parts or derived data from the state
  * @template T - Input state type
  * @template K - Selector output type
  */
-
 export type Selector<T, K> = (state: T) => K;
 
 /**
@@ -12,7 +13,6 @@ export type Selector<T, K> = (state: T) => K;
  * Handles the callback function for state changes
  * @template T - The type of data being listened to
  */
-
 export type Listener<T> = (value: T) => void;
 
 /**
@@ -90,9 +90,8 @@ export class Observer<T> {
   /**
    * Function used to compare values for equality
    * Defaults to Object.is
-   * @private
    */
-  private compare: CompareFunction<T> = Object.is;
+  protected compare: CompareFunction<T> = Object.is;
 
   /**
    * Register an observer to listen for state changes
@@ -127,7 +126,7 @@ export class Observer<T> {
   public observe<K = T>(
     selectorOrListener: Selector<T, K> | Listener<T>,
     listener?: Listener<K>
-  ): () => void {
+  ): Unsubscribe {
     let selector: Selector<T, unknown> | undefined;
     let actualListener: Listener<unknown>;
 
