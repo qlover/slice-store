@@ -1,5 +1,13 @@
 # @qlover/slice-store-react
 
+## 1.4.2
+
+### Patch Changes
+
+#### 🐞 Bug Fixes
+
+- **slice-store-react:** update dependencies and peerDependencies in slice-store-react package.json; restore react and react-dom versions in pnpm-lock.yaml ([b2d2059](https://github.com/qlover/slice-store/commit/b2d20591c894d9b75aa92b71f276f69270cc6636)) ([#31](https://github.com/qlover/slice-store/pull/31))
+
 ## 1.4.1
 
 ### Patch Changes
