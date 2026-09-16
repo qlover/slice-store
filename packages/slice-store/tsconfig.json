@@ -11,6 +11,7 @@
     "allowUnusedLabels": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "ignoreDeprecations": "6.0",
     "types": ["vitest/globals"]
   },
   "include": ["src"],

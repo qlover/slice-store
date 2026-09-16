@@ -2,6 +2,7 @@ import js from '@eslint/js';
 import globals from 'globals';
 import vitest from 'eslint-plugin-vitest';
 import * as eslintChain from '@qlover/fe-standard/eslint/index.js';
+import qloverEslint from '@qlover/eslint-plugin';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
@@ -53,7 +54,13 @@ export default tseslint.config([
       ...tseslint.configs.recommended,
       commonConfig
     ],
+    plugins: {
+      '@qlover-eslint': qloverEslint
+    },
     rules: {
+      ...qloverEslint.configs.recommended.rules,
+      '@qlover-eslint/ts-class-override': 'off',
+      '@qlover-eslint/require-root-testid': 'off',
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/no-unused-vars': 'error'
     }
