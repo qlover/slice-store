@@ -1,11 +1,11 @@
 {
   "protectedBranches": ["main", "develop"],
   "release": {
-    "githubPR": {
-      "commitArgs": ["--no-verify"],
-      "pushChangedLabels": true
-    },
-    "changelog": {
+    "changesetVersion": {
+      "changesetRoot": ".changeset",
+      "ignoreNonUpdatedPackages": false,
+      "useTrustedPublishing": true,
+      "dependencyReleaseTemplate": "- Update dependency **${name}** from `${oldVersion}` to `${newVersion}`",
       "formatTemplate": "\n- ${scopeHeader} ${commitlint.message} ${commitLink} ${prLink}",
       "commitBody": true,
       "types": [
@@ -30,6 +30,11 @@
         { "type": "revert", "section": "#### ⏪ Reverts", "hidden": true },
         { "type": "release", "section": "#### 🔖 Releases", "hidden": true }
       ]
+    },
+    "github": {
+      "autoMergeReleasePR": true,
+      "pushChangeLabels": false,
+      "commitArgs": ["--no-verify"]
     }
   }
 }
