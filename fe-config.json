@@ -33,7 +33,7 @@
     },
     "github": {
       "autoMergeReleasePR": true,
-      "pushChangeLabels": true,
+      "pushChangeLabels": false,
       "commitArgs": ["--no-verify"]
     }
   }
