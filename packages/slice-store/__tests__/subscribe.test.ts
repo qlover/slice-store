@@ -18,7 +18,7 @@ class AppStore extends SliceStore<Value> {
 }
 
 describe('subscribe', () => {
-  test('observe count changes using appStore.observe', () => {
+  test('observe count changes using appStore.observe', async () => {
     const appStore = new AppStore();
 
     let lastCount = appStore.state.count;
@@ -29,14 +29,16 @@ describe('subscribe', () => {
       }
     );
 
-    expect(lastCount).toBe(1); // 初始值应该是1
+    expect(lastCount).toBe(1);
 
     appStore.inc();
+    appStore.flush();
     expect(lastCount).toBe(2);
 
     appStore.inc();
+    appStore.flush();
     expect(lastCount).toBe(3);
 
-    unsubscribe(); // 取消订阅
+    unsubscribe();
   });
 });

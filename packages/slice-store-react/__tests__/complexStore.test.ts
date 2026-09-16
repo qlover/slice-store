@@ -38,6 +38,13 @@ class ComplexStore extends SliceStore<{
   };
 }
 
+async function actEmit(run: () => void): Promise<void> {
+  await act(async () => {
+    run();
+    await Promise.resolve();
+  });
+}
+
 describe('ComplexStore', () => {
   test('should initialize with correct data', () => {
     const complexStore = new ComplexStore();
@@ -52,11 +59,11 @@ describe('ComplexStore', () => {
     expect(result.current.metadata.lastUpdated).toBeDefined();
   });
 
-  test('should add new item', () => {
+  test('should add new item', async () => {
     const complexStore = new ComplexStore();
     const { result } = renderHook(() => useSliceStore(complexStore));
 
-    act(() => {
+    await actEmit(() => {
       complexStore.addItem({ id: 3, name: 'Item 3', value: 30 });
     });
 
@@ -68,11 +75,11 @@ describe('ComplexStore', () => {
     });
   });
 
-  test('should update existing item', () => {
+  test('should update existing item', async () => {
     const complexStore = new ComplexStore();
     const { result } = renderHook(() => useSliceStore(complexStore));
 
-    act(() => {
+    await actEmit(() => {
       complexStore.updateItem(1, { name: 'Updated Item 1', value: 15 });
     });
 
@@ -83,7 +90,7 @@ describe('ComplexStore', () => {
     });
   });
 
-  test('should use selector with complex data', () => {
+  test('should use selector with complex data', async () => {
     const complexStore = new ComplexStore();
     const { result } = renderHook(() =>
       useSliceStore(complexStore, (state) =>
@@ -93,15 +100,14 @@ describe('ComplexStore', () => {
 
     expect(result.current).toEqual(['Item 1', 'Item 2']);
 
-    act(() => {
+    await actEmit(() => {
       complexStore.addItem({ id: 3, name: 'Item 3', value: 30 });
     });
 
     expect(result.current).toEqual(['Item 1', 'Item 2', 'Item 3']);
   });
 
-  // 新增测试：多个组件同时监听复杂状态的变化
-  test('multiple components should react to complex state changes', () => {
+  test('multiple components should react to complex state changes', async () => {
     const complexStore = new ComplexStore();
     const { result: result1 } = renderHook(() => useSliceStore(complexStore));
     const { result: result2 } = renderHook(() =>
@@ -117,7 +123,7 @@ describe('ComplexStore', () => {
 
     const initialLastUpdated = result3.current;
 
-    act(() => {
+    await actEmit(() => {
       complexStore.addItem({ id: 3, name: 'Item 3', value: 30 });
     });
 
@@ -125,17 +131,16 @@ describe('ComplexStore', () => {
     expect(result2.current).toBe(3);
     expect(result3.current).not.toBe(initialLastUpdated);
 
-    act(() => {
+    await actEmit(() => {
       complexStore.updateItem(1, { name: 'Updated Item 1' });
     });
 
     expect(result1.current.items[0].name).toBe('Updated Item 1');
-    expect(result2.current).toBe(3); // 数量没有变化
+    expect(result2.current).toBe(3);
     expect(result3.current).not.toBe(initialLastUpdated);
   });
 
-  // 新增测试：多次监听同一个数据
-  test('multiple listeners should react to the same data changes', () => {
+  test('multiple listeners should react to the same data changes', async () => {
     const complexStore = new ComplexStore();
     const { result: result1 } = renderHook(() =>
       useSliceStore(complexStore, (state) => state.items[0].name)
@@ -151,7 +156,7 @@ describe('ComplexStore', () => {
     expect(result2.current).toBe('Item 1');
     expect(result3.current).toBe('Item 1');
 
-    act(() => {
+    await actEmit(() => {
       complexStore.updateItem(1, { name: 'Updated Item 1' });
     });
 
@@ -159,7 +164,7 @@ describe('ComplexStore', () => {
     expect(result2.current).toBe('Updated Item 1');
     expect(result3.current).toBe('Updated Item 1');
 
-    act(() => {
+    await actEmit(() => {
       complexStore.updateItem(1, { name: 'Changed Again' });
     });
 
@@ -168,8 +173,7 @@ describe('ComplexStore', () => {
     expect(result3.current).toBe('Changed Again');
   });
 
-  // 新增测试：处理空数组和未定义的情况
-  test('should handle empty array and undefined values', () => {
+  test('should handle empty array and undefined values', async () => {
     class EmptyStore extends SliceStore<{
       items: Array<{ id: number; name: string }>;
       optionalField?: string;
@@ -193,20 +197,20 @@ describe('ComplexStore', () => {
     expect(result.current.items).toHaveLength(0);
     expect(result.current.optionalField).toBeUndefined();
 
-    act(() => {
+    await actEmit(() => {
       emptyStore.addItem({ id: 1, name: 'First Item' });
     });
 
     expect(result.current.items).toHaveLength(1);
     expect(result.current.items[0].name).toBe('First Item');
 
-    act(() => {
+    await actEmit(() => {
       emptyStore.setOptionalField('Some Value');
     });
 
     expect(result.current.optionalField).toBe('Some Value');
 
-    act(() => {
+    await actEmit(() => {
       emptyStore.setOptionalField(undefined);
     });
 

@@ -23,20 +23,27 @@ class CounterStore extends SliceStore<{
   };
 }
 
-// 原有的测试保持不变
-test('should use counter', () => {
+/** Flush SliceStore microtask notify inside React act */
+async function actEmit(run: () => void): Promise<void> {
+  await act(async () => {
+    run();
+    await Promise.resolve();
+  });
+}
+
+test('should use counter', async () => {
   const counterStore = new CounterStore(1);
   const { result } = renderHook(() => useSliceStore(counterStore));
 
   expect(result.current.count).toBe(1);
 
-  act(() => {
+  await actEmit(() => {
     counterStore.increment();
   });
 
   expect(result.current.count).toBe(2);
 
-  act(() => {
+  await actEmit(() => {
     counterStore.decrement();
   });
 
@@ -50,8 +57,7 @@ test('should initialize counter with custom initial value', () => {
   expect(result.current.count).toBe(5);
 });
 
-// 新增测试：多个组件同时监听状态变化
-test('multiple components should react to state changes', () => {
+test('multiple components should react to state changes', async () => {
   const counterStore = new CounterStore(1);
   const { result: result1 } = renderHook(() => useSliceStore(counterStore));
   const { result: result2 } = renderHook(() => useSliceStore(counterStore));
@@ -59,7 +65,7 @@ test('multiple components should react to state changes', () => {
   expect(result1.current.count).toBe(1);
   expect(result2.current.count).toBe(1);
 
-  act(() => {
+  await actEmit(() => {
     counterStore.increment();
   });
 
@@ -67,8 +73,7 @@ test('multiple components should react to state changes', () => {
   expect(result2.current.count).toBe(2);
 });
 
-// 新增测试：使用 selector 监听特定状态变化
-test('should use selector to listen to specific state changes', () => {
+test('should use selector to listen to specific state changes', async () => {
   const counterStore = new CounterStore(1);
   const { result } = renderHook(() =>
     useSliceStore(counterStore, (state) => state.name)
@@ -76,16 +81,15 @@ test('should use selector to listen to specific state changes', () => {
 
   expect(result.current).toBe('Counter');
 
-  act(() => {
+  await actEmit(() => {
     counterStore.changeName('New Counter');
   });
 
   expect(result.current).toBe('New Counter');
 
-  act(() => {
+  await actEmit(() => {
     counterStore.increment();
   });
 
-  // 验证 selector 只关注 name 的变化，而忽略 count 的变化
   expect(result.current).toBe('New Counter');
 });

@@ -115,12 +115,14 @@ describe('SliceStore Constructor and reset method test', () => {
         items: ['task1', 'task2'],
         loading: true
       });
+      todoStore.flush();
 
       expect(todoStore.state.items).toHaveLength(2);
       expect(todoStore.state.loading).toBe(true);
       expect(mockObserver).toHaveBeenCalledTimes(1);
 
       todoStore.reset();
+      todoStore.flush();
 
       expect(todoStore.state.items).toHaveLength(0);
       expect(todoStore.state.loading).toBe(false);

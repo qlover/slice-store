@@ -27,7 +27,6 @@ describe('multiple observers', () => {
     let nameObserverCalled = 0;
     let fullStateObserverCalled = 0;
 
-    // 观察者1: 只关注 count
     const unsubscribeCount = appStore.observe(
       (state) => state.count,
       (newCount) => {
@@ -36,7 +35,6 @@ describe('multiple observers', () => {
       }
     );
 
-    // 观察者2: 只关注 name
     const unsubscribeName = appStore.observe(
       (state) => state.name,
       (newName) => {
@@ -45,36 +43,33 @@ describe('multiple observers', () => {
       }
     );
 
-    // 观察者3: 关注整个状态
     const unsubscribeFullState = appStore.observe((newState) => {
       fullStateObserverCalled++;
       expect(newState).toEqual(appStore.state);
     });
 
-    // 初始状态不应触发观察者
     expect(countObserverCalled).toBe(0);
     expect(nameObserverCalled).toBe(0);
     expect(fullStateObserverCalled).toBe(0);
 
-    // 只改变 count
     appStore.increment();
+    appStore.flush();
     expect(countObserverCalled).toBe(1);
-    expect(nameObserverCalled).toBe(0); // 这里应该是 0，但实际上可能是 1
+    expect(nameObserverCalled).toBe(0);
     expect(fullStateObserverCalled).toBe(1);
 
-    // 只改变 name
     appStore.changeName('new name');
-    expect(countObserverCalled).toBe(1); // 这里应该是 1，但实际上可能是 2
+    appStore.flush();
+    expect(countObserverCalled).toBe(1);
     expect(nameObserverCalled).toBe(1);
     expect(fullStateObserverCalled).toBe(2);
 
-    // 取消订阅
     unsubscribeCount();
     unsubscribeName();
     unsubscribeFullState();
 
-    // 再次触发状态变化,观察者不应被调用
     appStore.increment();
+    appStore.flush();
     expect(countObserverCalled).toBe(1);
     expect(nameObserverCalled).toBe(1);
     expect(fullStateObserverCalled).toBe(2);
@@ -111,80 +106,80 @@ describe('multiple observers', () => {
       }
     );
 
-    // 初始状态不应触发观察者
     expect(observer1CalledCount).toBe(0);
     expect(observer2CalledCount).toBe(0);
     expect(observer3CalledCount).toBe(0);
 
-    // 改变 count，所有观察者都应被触发
     appStore.increment();
+    appStore.flush();
     expect(observer1CalledCount).toBe(1);
     expect(observer2CalledCount).toBe(1);
     expect(observer3CalledCount).toBe(1);
 
-    // 再次改变 count，所有观察者再次被触发
     appStore.increment();
+    appStore.flush();
     expect(observer1CalledCount).toBe(2);
     expect(observer2CalledCount).toBe(2);
     expect(observer3CalledCount).toBe(2);
 
-    // 改变 name 不应触发 count 观察者
     appStore.changeName('new name');
+    appStore.flush();
     expect(observer1CalledCount).toBe(2);
     expect(observer2CalledCount).toBe(2);
     expect(observer3CalledCount).toBe(2);
 
-    // 取消订阅观察者2
     unsubscribe2();
 
-    // 再次改变 count，观察���1和3应被触发，观察者2不应被触发
     appStore.increment();
+    appStore.flush();
     expect(observer1CalledCount).toBe(3);
     expect(observer2CalledCount).toBe(2);
     expect(observer3CalledCount).toBe(3);
 
-    // 取消所有订阅
     unsubscribe1();
     unsubscribe3();
 
-    // 再次触发状态变化，所有观察者都不应被调用
     appStore.increment();
+    appStore.flush();
     expect(observer1CalledCount).toBe(3);
     expect(observer2CalledCount).toBe(2);
     expect(observer3CalledCount).toBe(3);
   });
 
-  test('连续多次改变状态，观察者应该被多次触发', () => {
+  test('连续多次同步改变状态，观察者应合并为一次通知', () => {
     const appStore = new AppStore();
 
     let observerCalledCount = 0;
+    let lastCount = 0;
 
     const unsubscribe = appStore.observe(
       (state) => state.count,
       (newCount) => {
         observerCalledCount++;
-        expect(newCount).toBe(appStore.state.count);
+        lastCount = newCount;
       }
     );
 
-    // 初始状态不应触发观察者
     expect(observerCalledCount).toBe(0);
 
-    // 连续多次改变 count，观察者应该被多次触发
     appStore.increment();
     appStore.increment();
     appStore.increment();
-    expect(observerCalledCount).toBe(3);
+    expect(observerCalledCount).toBe(0);
 
-    // 改变 name 不应触发 count 观察者
+    appStore.flush();
+    expect(observerCalledCount).toBe(1);
+    expect(lastCount).toBe(4);
+    expect(appStore.state.count).toBe(4);
+
     appStore.changeName('new name');
-    expect(observerCalledCount).toBe(3);
+    appStore.flush();
+    expect(observerCalledCount).toBe(1);
 
-    // 取消订阅
     unsubscribe();
 
-    // 再次触发状态变化，观察者不应被调用
     appStore.increment();
-    expect(observerCalledCount).toBe(3);
+    appStore.flush();
+    expect(observerCalledCount).toBe(1);
   });
 });
