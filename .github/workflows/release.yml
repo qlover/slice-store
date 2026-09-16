@@ -10,87 +10,134 @@ on:
     paths:
       - packages/**
 
+concurrency:
+  group: release-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
 jobs:
-  release-pull-request:
+  # PR merged to main with preRelease (non-release head) -> version bump + create release PR
+  create-release-pr:
     if: |
-      github.event.pull_request.merged == true && 
-      !contains(github.event.pull_request.labels.*.name, 'CI-Release')
+      github.event_name == 'workflow_dispatch' ||
+      (
+        github.event.pull_request.merged == true &&
+        github.event.pull_request.base.ref == 'main' &&
+        !startsWith(github.event.pull_request.head.ref, 'release/') &&
+        contains(github.event.pull_request.labels.*.name, 'preRelease')
+      )
     runs-on: ubuntu-latest
+    env:
+      NX_DAEMON: 'false'
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 0
           fetch-tags: true
 
       - name: Config Git
         run: |
           git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"  
-      - name: Install Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '18.20.0'
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-      - run: npm install -g pnpm
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.19.0'
+
+      - run: npm install -g pnpm@10
       - run: pnpm install --frozen-lockfile
+
       - run: pnpm lint
       - run: pnpm test
-
-      # CI environment does not have .nx/cache cache, and each new build cannot read the cache, 
-      # if there is no cache from the last time, then other packages will not produce dist, but the local will read it directly from .nx/cache
-      # TODO: solve nx cache, use incremental build
-      # - run: pnpm nx:build --base=HEAD~1 --head=HEAD
       - run: pnpm nx:build:force
-
       - run: pnpm rebuild
 
-      - name: Release Pull Request
-        run: npx fe-release -V -P --githubPR.push-change-labels --workspaces.change-labels=${{join(github.event.pull_request.labels.*.name,',')}} --changelog.ignore-non-updated-packages
+      - name: Create release PR to main
+        if: github.event_name == 'pull_request'
+        run: |
+          INCREMENT=patch
+          if [[ "${{ contains(github.event.pull_request.labels.*.name, 'increment:major') }}" == "true" ]]; then
+            INCREMENT=major
+          elif [[ "${{ contains(github.event.pull_request.labels.*.name, 'increment:minor') }}" == "true" ]]; then
+            INCREMENT=minor
+          fi
+          echo "Using version increment: $INCREMENT"
+          npx fe-release -V \
+            -s main \
+            -i "$INCREMENT" \
+            --workspaces.compare-ref "${{ github.event.pull_request.base.sha }}" \
+            --changesetVersion.ignore-non-updated-packages
         env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+          FE_RELEASE_BRANCH: main
 
-  release:
+      - name: Create release PR to main (manual)
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          npx fe-release -V \
+            -s main \
+            --changesetVersion.ignore-non-updated-packages
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+          FE_RELEASE_BRANCH: main
+
+  # release/* PR merged to main with CI-Release -> publish to npm and GitHub
+  publish:
     if: |
-      github.event.pull_request.merged == true && 
+      github.event.pull_request.merged == true &&
+      github.event.pull_request.base.ref == 'main' &&
+      startsWith(github.event.pull_request.head.ref, 'release/') &&
       contains(github.event.pull_request.labels.*.name, 'CI-Release')
-
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      # Required for npm Trusted Publishing (OIDC)
+      id-token: write
+    env:
+      NX_DAEMON: 'false'
 
     steps:
+      # PAT is required: default GITHUB_TOKEN from pull_request may not push tags
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           fetch-tags: true
+          token: ${{ secrets.PAT_TOKEN }}
 
       - name: Config Git
         run: |
           git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"  
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Install Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: '18.20.0'
+          node-version: '20.19.0'
 
-      - run: npm install -g pnpm
+      - run: npm install -g pnpm@10
+
+      - name: Upgrade npm for Trusted Publishing
+        run: npm install -g npm@11.15.0
+
       - run: pnpm install --frozen-lockfile
+
       - run: pnpm lint
       - run: pnpm test
-
-      # CI environment does not have .nx/cache cache, and each new build cannot read the cache, 
-      # if there is no cache from the last time, then other packages will not produce dist, but the local will read it directly from .nx/cache
-      # TODO: solve nx cache, use incremental build
-      # - run: pnpm nx:build --base=HEAD~1 --head=HEAD
-
       - run: pnpm nx:build:force
-
       - run: pnpm rebuild
 
       - name: Create tag and publish
-        run: npx fe-release -V --changelog.skip-changeset --workspaces.change-labels=${{join(github.event.pull_request.labels.*.name,',')}}
+        run: |
+          npx fe-release -V \
+            --workspaces.compare-ref "${{ github.event.pull_request.base.sha }}" \
+            --changesetVersion.skip-changeset \
+            --changesetVersion.mode publish \
+            --changesetVersion.use-trusted-publishing \
+            --github.mode createRelease
         env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN}}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+          FE_RELEASE_BRANCH: main
