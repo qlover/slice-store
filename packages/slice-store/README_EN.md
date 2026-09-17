@@ -1,56 +1,91 @@
-# slice-store
+# @qlover/slice-store
 
-## Introduction
+[简体中文](./README.md) | English
 
-slice-store is a powerful state management library that helps you write JavaScript applications with consistent behavior, running in different environments (client, server, and native), and easy to test. It provides a simple and effective way to manage and update your application's state.
+> Chinese is the default for this package. Prefer [README.md](./README.md).
+
+A lightweight slice state store: encapsulate state in a class, update with `emit`, subscribe with `observe`.
 
 ## Features
 
-- Simple and easy-to-use API
-- Support for various data types (objects, arrays, numbers, etc.)
-- Observable state updates
-- Support for binding multiple event handlers to the same state
-- Type-safe (using TypeScript)
-- Cross-platform compatibility
+- Simple, TypeScript-friendly API
+- Objects, arrays, numbers, and more
+- Consecutive sync `emit` calls are merged into one microtask notification by default
+- Value / updater `emit`, plus `flush`
+- Multiple observers and selectors on the same store
+- Works across environments (browser, Node, etc.)
 
-## Installation
+## Install
 
 ```bash
 npm install @qlover/slice-store
-# or use yarn
-yarn add @qlover/slice-store
+# or
+pnpm add @qlover/slice-store
 ```
 
-## Basic Usage Example
+## Basic usage
 
 ```typescript
-type Value = {
-  count: number;
-};
+import { SliceStore } from '@qlover/slice-store';
+
+type Value = { count: number };
+
 class AppStore extends SliceStore<Value[]> {
   constructor() {
     super(() => [{ count: 1 }]);
   }
-  incAll() {
-    const newState = this.state.map((val) => ({
-      count: val.count + 1
-    }));
-    this.emit(newState);
+
+  incAll(): void {
+    this.emit(this.state.map((val) => ({ count: val.count + 1 })));
   }
 }
 
 const appStore = new AppStore();
-
 appStore.incAll();
-console.log(appStore.state[0].count); //=> 2
-
-appStore.incAll();
-console.log(appStore.state[0].count); //=> 3
+console.log(appStore.state[0].count); // => 2
 ```
 
-## Multiple Observers Example
+## emit batching (microtask)
 
-slice-store now supports binding multiple event handlers to the same state. This allows you to respond more flexibly to state changes:
+When you call `emit` multiple times in the same synchronous turn:
+
+- **state updates immediately** to the final value
+- **observers are notified once** by default (deferred to a microtask)
+
+You can emit several times inside a business method without wrapping in `batch()`:
+
+```typescript
+updateProfile(name: string, age: number): void {
+  this.emit({ ...this.state, name });
+  this.emit({ ...this.state, age });
+  // subscribers notified once with final name + age
+}
+```
+
+### updater (preferred for concurrent / async writes)
+
+When parallel async tasks update different fields, use an updater so each write commits against the latest state:
+
+```typescript
+store.emit((s) => ({ ...s, a: 1 }));
+store.emit((s) => ({ ...s, b: 2 }));
+// final { a: 1, b: 2 }
+```
+
+### flush immediately
+
+For tests or sync side effects:
+
+```typescript
+store.emit({ ...store.state, ready: true }, { flush: true });
+// or
+store.emit({ ...store.state, ready: true });
+store.flush();
+```
+
+Updates across `await` are separate batches and notify separately (e.g. `loading: true` then the result). That is intentional.
+
+## Multiple observers
 
 ```typescript
 import { SliceStore } from '@qlover/slice-store';
@@ -60,31 +95,43 @@ class CounterStore extends SliceStore<number> {
     super(() => 0);
   }
 
-  increment() {
+  increment(): void {
     this.emit(this.state + 1);
   }
 }
 
 const counterStore = new CounterStore();
 
-// Bind multiple observers
-counterStore.subscribe((state) => {
+counterStore.observe((state) => {
   console.log('Observer 1:', state);
 });
 
-counterStore.subscribe((state) => {
+counterStore.observe((state) => {
   console.log('Observer 2:', state);
 });
 
 counterStore.increment();
-// Output:
-// Observer 1: 1
-// Observer 2: 1
-
-counterStore.increment();
-// Output:
-// Observer 1: 2
-// Observer 2: 2
 ```
 
-This example demonstrates how to bind multiple observers to the same state, with each observer being called when the state changes.
+Selectors notify only when the selected value changes:
+
+```typescript
+store.observe(
+  (s) => s.count,
+  (count) => console.log('count =', count)
+);
+```
+
+## React
+
+Use [`@qlover/slice-store-react`](../slice-store-react/README.md) (`useSliceStore`).
+
+Playground from the monorepo root:
+
+```bash
+pnpm dev:playground
+```
+
+## License
+
+ISC
