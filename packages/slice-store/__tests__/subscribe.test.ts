@@ -9,7 +9,7 @@ class AppStore extends SliceStore<Value> {
     super(() => ({ count: 1 }));
   }
 
-  inc(): void {
+  public inc(): void {
     const newState = {
       count: this.state.count + 1
     };

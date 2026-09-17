@@ -5,7 +5,7 @@ class AppStore extends SliceStore<number> {
     super(() => 1);
   }
 
-  inc(): void {
+  public inc(): void {
     this.emit(this.state + 1);
   }
 }

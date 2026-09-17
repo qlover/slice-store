@@ -124,7 +124,7 @@ export class Observer<T> {
    * );
    * ```
    */
-  observe<K = T>(
+  public observe<K = T>(
     selectorOrListener: Selector<T, K> | Listener<T>,
     listener?: Listener<K>
   ): () => void {
@@ -170,7 +170,7 @@ export class Observer<T> {
    * observer.notify(newState, oldState);
    * ```
    */
-  notify(value: T, lastValue?: T): void {
+  public notify(value: T, lastValue?: T): void {
     for (const observer of this.observers) {
       const { selector, listener } = observer;
       if (selector) {
@@ -215,7 +215,7 @@ export class Observer<T> {
    * observer.notify({count: 3});
    * ```
    */
-  clear(): void {
+  public clear(): void {
     this.observers = [];
     this.lastValues.clear();
   }

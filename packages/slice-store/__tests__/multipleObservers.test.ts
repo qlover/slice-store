@@ -10,11 +10,11 @@ class AppStore extends SliceStore<Value> {
     super(() => ({ count: 1, name: 'initial' }));
   }
 
-  increment(): void {
+  public increment(): void {
     this.emit({ ...this.state, count: this.state.count + 1 });
   }
 
-  changeName(newName: string): void {
+  public changeName(newName: string): void {
     this.emit({ ...this.state, name: newName });
   }
 }

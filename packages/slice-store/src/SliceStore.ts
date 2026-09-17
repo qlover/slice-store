@@ -94,7 +94,7 @@ export class SliceStore<T> extends Observer<T> {
    *
    * @returns {T} The current state object
    */
-  get state(): T {
+  public get state(): T {
     return this._state;
   }
 
@@ -159,7 +159,7 @@ export class SliceStore<T> extends Observer<T> {
    * store.emit(initialState);
    * ```
    */
-  setDefaultState(value: T): this {
+  public setDefaultState(value: T): this {
     this._state = value;
     return this;
   }
@@ -195,7 +195,12 @@ export class SliceStore<T> extends Observer<T> {
    * store.emit({ ...store.state, ready: true }, { flush: true });
    * ```
    */
-  emit(stateOrUpdater: T | StateUpdater<T>, options?: EmitOptions): void {
+  public emit(stateOrUpdater: StateUpdater<T>, options?: EmitOptions): void;
+  public emit(stateOrUpdater: T, options?: EmitOptions): void;
+  public emit(
+    stateOrUpdater: T | StateUpdater<T>,
+    options?: EmitOptions
+  ): void {
     const lastValue = this._state;
     this._state =
       typeof stateOrUpdater === 'function'
@@ -222,7 +227,7 @@ export class SliceStore<T> extends Observer<T> {
    * store.flush(); // notify now
    * ```
    */
-  flush(): void {
+  public flush(): void {
     this.flushPending();
   }
 
@@ -246,7 +251,7 @@ export class SliceStore<T> extends Observer<T> {
    *
    * @since 1.2.5
    */
-  reset(): void {
+  public reset(): void {
     this.emit(factory(this.maker));
   }
 

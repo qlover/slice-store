@@ -44,7 +44,12 @@ const commonConfig = createCommon();
  */
 export default tseslint.config([
   {
-    ignores: ['**/dist/**', '**/build/**', '**/node_modules/**']
+    ignores: [
+      '**/dist/**',
+      '**/build/**',
+      '**/node_modules/**',
+      'examples/**'
+    ]
   },
 
   {
@@ -54,6 +59,12 @@ export default tseslint.config([
       ...tseslint.configs.recommended,
       commonConfig
     ],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node
+      }
+    },
     plugins: {
       '@qlover-eslint': qloverEslint
     },
@@ -62,7 +73,17 @@ export default tseslint.config([
       '@qlover-eslint/ts-class-override': 'off',
       '@qlover-eslint/require-root-testid': 'off',
       '@typescript-eslint/explicit-function-return-type': 'off',
-      '@typescript-eslint/no-unused-vars': 'error'
+      // TypeScript overload signatures are duplicate class members by design
+      'no-dupe-class-members': 'off',
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_'
+        }
+      ]
     }
   },
 

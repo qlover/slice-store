@@ -16,7 +16,11 @@ class ComplexStore extends SliceStore<{
     }));
   }
 
-  addItem = (item: { id: number; name: string; value: number }): void => {
+  public addItem = (item: {
+    id: number;
+    name: string;
+    value: number;
+  }): void => {
     this.emit({
       ...this.state,
       items: [...this.state.items, item],
@@ -24,7 +28,7 @@ class ComplexStore extends SliceStore<{
     });
   };
 
-  updateItem = (
+  public updateItem = (
     id: number,
     updates: Partial<{ name: string; value: number }>
   ): void => {
@@ -182,11 +186,11 @@ describe('ComplexStore', () => {
         super(() => ({ items: [] }));
       }
 
-      addItem = (item: { id: number; name: string }) => {
+      public addItem = (item: { id: number; name: string }) => {
         this.emit({ ...this.state, items: [...this.state.items, item] });
       };
 
-      setOptionalField = (value?: string) => {
+      public setOptionalField = (value?: string) => {
         this.emit({ ...this.state, optionalField: value });
       };
     }
