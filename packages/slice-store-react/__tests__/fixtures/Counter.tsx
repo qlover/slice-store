@@ -6,11 +6,11 @@ class AppStore extends SliceStore<{ count: number }> {
     super(() => ({ count: 1 }));
   }
 
-  inc = (): void => {
+  public inc = (): void => {
     this.emit({ count: this.state.count + 1 });
   };
 
-  dec = (): void => {
+  public dec = (): void => {
     this.emit({ count: this.state.count - 1 });
   };
 }

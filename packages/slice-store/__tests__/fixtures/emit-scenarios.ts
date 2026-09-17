@@ -116,8 +116,7 @@ export async function scenarioFlushOption(): Promise<ScenarioResult> {
   return {
     id: 'flush-option',
     title: '使用 { flush: true } 立刻通知',
-    description:
-      '当订阅者必须在同一调用栈内执行时使用（测试、同步副作用等）。',
+    description: '当订阅者必须在同一调用栈内执行时使用（测试、同步副作用等）。',
     notifyCount,
     finalState: { ...store.state },
     notes: ['在等待任何 microtask 之前，notifyCount 已经是 1']
@@ -172,8 +171,7 @@ export async function scenarioAsyncAcrossAwait(): Promise<ScenarioResult> {
   return {
     id: 'async-across-await',
     title: '跨 await 的异步更新',
-    description:
-      'await 之后是新的一轮批次——loading 与结果会分别通知。',
+    description: 'await 之后是新的一轮批次——loading 与结果会分别通知。',
     notifyCount,
     finalState: { ...store.state },
     notes: [
@@ -294,8 +292,7 @@ export async function scenarioSelectorInBatch(): Promise<ScenarioResult> {
   return {
     id: 'selector-in-batch',
     title: 'Selector 比较基于批次起始旧状态',
-    description:
-      '只有选中值在批次起止之间发生变化的 selector 才会被通知。',
+    description: '只有选中值在批次起止之间发生变化的 selector 才会被通知。',
     notifyCount: aNotify + bNotify,
     finalState: { ...store.state },
     notes: [

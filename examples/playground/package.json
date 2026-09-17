@@ -1,6 +1,6 @@
 {
   "name": "@qlover/slice-store-playground",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
   "description": "真实项目示例：手动验证 slice-store / slice-store-react",
