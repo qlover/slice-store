@@ -1,8 +1,8 @@
-import { runAllScenarios } from '../../../examples/playground/src/scenarios/emit-scenarios';
+import { runAllScenarios } from './fixtures/emit-scenarios';
 
 /**
  * Living example assertions for emit update scenarios.
- * Scenario implementations live in examples/playground.
+ * Scenario implementations live in __tests__/fixtures.
  */
 describe('emit scenarios (example)', () => {
   test('lists and verifies all update situations', async () => {

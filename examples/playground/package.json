@@ -4,6 +4,9 @@
   "private": true,
   "type": "module",
   "description": "真实项目示例：手动验证 slice-store / slice-store-react",
+  "nx": {
+    "includedScripts": []
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
