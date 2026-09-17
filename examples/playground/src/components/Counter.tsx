@@ -1,16 +1,16 @@
 import { SliceStore } from '@qlover/slice-store';
-import { useSliceStore } from '../../src/useSliceStore';
+import { useSliceStore } from '@qlover/slice-store-react';
 
 class AppStore extends SliceStore<{ count: number }> {
   constructor() {
     super(() => ({ count: 1 }));
   }
 
-  inc = () => {
+  inc = (): void => {
     this.emit({ count: this.state.count + 1 });
   };
 
-  dec = () => {
+  dec = (): void => {
     this.emit({ count: this.state.count - 1 });
   };
 }
@@ -21,17 +21,17 @@ export default function Counter() {
   const { count } = useSliceStore(appStore);
 
   return (
-    <>
-      <h1>React Slice Store</h1>
-      <div className="card">
+    <section>
+      <h2>React Slice Store 计数器</h2>
+      <div>
         <button data-testid="incrementButton" onClick={appStore.inc}>
-          incrementButton
+          +1
         </button>
         <button data-testid="decrementButton" onClick={appStore.dec}>
-          decrementButton
+          -1
         </button>
       </div>
       <div data-testid="countText">{count}</div>
-    </>
+    </section>
   );
 }

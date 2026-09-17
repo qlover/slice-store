@@ -34,7 +34,8 @@
     "github": {
       "autoMergeReleasePR": true,
       "pushChangeLabels": false,
-      "commitArgs": ["--no-verify"]
+      "commitArgs": ["--no-verify"],
+      "ignoreReleasePaths": ["examples"]
     }
   }
 }

@@ -2,6 +2,30 @@ import { ConstructorType, factory } from './factory';
 import { Observer } from './Observer';
 
 /**
+ * Updater function that receives the previous state and returns the next state.
+ *
+ * Prefer this form when multiple async flows may update different fields,
+ * so each write is applied against the latest state at commit time.
+ *
+ * @template T - The type of the state
+ */
+export type StateUpdater<T> = (prev: T) => T;
+
+/**
+ * Options for {@link SliceStore.emit}
+ */
+export type EmitOptions = {
+  /**
+   * When `true`, notify observers immediately instead of deferring to a microtask.
+   *
+   * Useful in tests or when a subscriber must run synchronously after emit.
+   *
+   * @default false
+   */
+  flush?: boolean;
+};
+
+/**
  * State Slice Store
  *
  * SliceStore is a state management container that maintains a state object and notifies observers when the state changes.
@@ -10,9 +34,9 @@ import { Observer } from './Observer';
  * Main features:
  * 1. Maintain a mutable state
  * 2. Provide read access to the state
- * 3. Allow updating the state through emit
+ * 3. Allow updating the state through emit (value or updater)
  * 4. Reset the state to the initial value
- * 5. Notify all observers when the state changes
+ * 5. Notify all observers when the state changes (batched by microtask by default)
  *
  * @example Basic usage
  * ```typescript
@@ -24,12 +48,12 @@ import { Observer } from './Observer';
  * const userStore = new SliceStore(UserState);
  *
  * // Subscribe to state changes
- * userStore.subscribe((newState, oldState) => {
- *   console.log('状态已更新:', newState, oldState);
+ * userStore.observe((newState) => {
+ *   console.log('state updated:', newState);
  * });
  *
- * // Update state
- * userStore.emit({ name: '张三', age: 30 });
+ * // Update state (notification is deferred to a microtask)
+ * userStore.emit({ name: 'Alice', age: 30 });
  *
  * // Reset state
  * userStore.reset();
@@ -45,6 +69,18 @@ export class SliceStore<T> extends Observer<T> {
   private _state: T;
 
   /**
+   * Whether a microtask flush has already been scheduled
+   * @private
+   */
+  private pendingNotify = false;
+
+  /**
+   * The state snapshot before the first emit in the current microtask batch
+   * @private
+   */
+  private batchOldState?: T;
+
+  /**
    * Get the current state
    *
    * This property is read-only, returning a reference to the stored state object.
@@ -58,7 +94,7 @@ export class SliceStore<T> extends Observer<T> {
    *
    * @returns {T} The current state object
    */
-  get state(): T {
+  public get state(): T {
     return this._state;
   }
 
@@ -123,37 +159,76 @@ export class SliceStore<T> extends Observer<T> {
    * store.emit(initialState);
    * ```
    */
-  setDefaultState(value: T): this {
+  public setDefaultState(value: T): this {
     this._state = value;
     return this;
   }
 
   /**
-   * Update the state and notify all observers
+   * Update the state and schedule observer notification
    *
-   * This method will replace the current state object and trigger all subscribed observers.
-   * The observers will receive the new and old state as parameters.
+   * By default, consecutive `emit` calls in the same synchronous turn are merged:
+   * state is updated immediately, but observers are notified once in a microtask
+   * with the first old state and the final new state.
    *
-   * @param {T} state - The new state object
+   * Pass an updater function when parallel async flows may race on different fields.
+   * Pass `{ flush: true }` when observers must run synchronously.
+   *
+   * @param {T | StateUpdater<T>} stateOrUpdater - Next state, or a function of previous state
+   * @param {EmitOptions} [options] - Emit options
+   *
+   * @example Value emit with automatic batching
+   * ```typescript
+   * store.emit({ ...store.state, a: 1 });
+   * store.emit({ ...store.state, b: 2 });
+   * // observers notified once: { a: 1, b: 2 }
+   * ```
+   *
+   * @example Updater emit (safe for concurrent writes)
+   * ```typescript
+   * store.emit((s) => ({ ...s, a: 1 }));
+   * store.emit((s) => ({ ...s, b: 2 }));
+   * ```
+   *
+   * @example Immediate notify
+   * ```typescript
+   * store.emit({ ...store.state, ready: true }, { flush: true });
+   * ```
+   */
+  public emit(stateOrUpdater: StateUpdater<T>, options?: EmitOptions): void;
+  public emit(stateOrUpdater: T, options?: EmitOptions): void;
+  public emit(
+    stateOrUpdater: T | StateUpdater<T>,
+    options?: EmitOptions
+  ): void {
+    const lastValue = this._state;
+    this._state =
+      typeof stateOrUpdater === 'function'
+        ? (stateOrUpdater as StateUpdater<T>)(lastValue)
+        : stateOrUpdater;
+
+    if (options?.flush) {
+      this.flushPending(lastValue);
+      return;
+    }
+
+    this.scheduleNotify(lastValue);
+  }
+
+  /**
+   * Flush a pending batched notification immediately
+   *
+   * If no notification is pending, this is a no-op.
+   * Use this in tests or when you need subscribers to run before continuing.
    *
    * @example
    * ```typescript
-   * interface UserState {
-   *   name: string;
-   *   age: number;
-   * }
-   *
-   * const userStore = new SliceStore<UserState>({
-   *   name: 'John',
-   *   age: 20,
-   * });
-   * userStore.emit({ name: 'Jane', age: 25 });
+   * store.emit({ ...store.state, count: 1 });
+   * store.flush(); // notify now
    * ```
    */
-  emit(state: T): void {
-    const lastValue = this.state;
-    this._state = state;
-    this.notify(this._state, lastValue);
+  public flush(): void {
+    this.flushPending();
   }
 
   /**
@@ -176,7 +251,40 @@ export class SliceStore<T> extends Observer<T> {
    *
    * @since 1.2.5
    */
-  reset(): void {
+  public reset(): void {
     this.emit(factory(this.maker));
+  }
+
+  /**
+   * Schedule a microtask notification if one is not already pending
+   * @private
+   */
+  private scheduleNotify(lastValue: T): void {
+    if (!this.pendingNotify) {
+      this.pendingNotify = true;
+      this.batchOldState = lastValue;
+      queueMicrotask(() => {
+        this.flushPending();
+      });
+    }
+  }
+
+  /**
+   * Notify observers with the current state if a batch is pending,
+   * or notify immediately when `fallbackOldState` is provided for a flush emit.
+   * @private
+   */
+  private flushPending(fallbackOldState?: T): void {
+    if (this.pendingNotify) {
+      const oldState = this.batchOldState as T;
+      this.pendingNotify = false;
+      this.batchOldState = undefined;
+      this.notify(this._state, oldState);
+      return;
+    }
+
+    if (fallbackOldState !== undefined) {
+      this.notify(this._state, fallbackOldState);
+    }
   }
 }

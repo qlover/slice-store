@@ -27,6 +27,10 @@ export default defineConfig({
       '@qlover/slice-store': path.resolve(
         __dirname,
         './packages/slice-store/__mocks__/index.ts'
+      ),
+      '@qlover/slice-store-react': path.resolve(
+        __dirname,
+        './packages/slice-store-react/src/index.ts'
       )
     }
   }

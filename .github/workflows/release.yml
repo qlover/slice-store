@@ -137,7 +137,8 @@ jobs:
             --changesetVersion.skip-changeset \
             --changesetVersion.mode publish \
             --changesetVersion.use-trusted-publishing \
-            --github.mode createRelease
+            --github.mode createRelease \
+            --github.ignore-release-paths examples
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
           FE_RELEASE_BRANCH: main

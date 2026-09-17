@@ -8,7 +8,7 @@ class AppStore extends SliceStore<Value[]> {
     super(() => [{ count: 1 }]);
   }
 
-  incAll(): void {
+  public incAll(): void {
     const newState = this.state.map((val) => ({
       count: val.count + 1
     }));

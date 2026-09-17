@@ -3,24 +3,21 @@
     "target": "ESNext",
     "useDefineForClassFields": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "outDir": "dist",
-    "allowJs": false,
+    "module": "ESNext",
     "skipLibCheck": true,
-    "esModuleInterop": false,
+    "moduleResolution": "Bundler",
     "allowSyntheticDefaultImports": true,
     "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
     "jsx": "react-jsx",
+    "noEmit": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "types": ["vite/client"],
     "ignoreDeprecations": "6.0",
-    "types": ["vite/client", "vitest/globals"],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@qlover/slice-store": ["../../packages/slice-store/src/index.ts"],
+      "@qlover/slice-store-react": ["../../packages/slice-store-react/src/index.ts"]
     }
   },
   "include": ["src", "vite.config.ts"]

@@ -1,0 +1,28 @@
+{
+  "name": "@qlover/slice-store-playground",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "真实项目示例：手动验证 slice-store / slice-store-react",
+  "nx": {
+    "includedScripts": []
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@qlover/slice-store": "workspace:*",
+    "@qlover/slice-store-react": "workspace:*",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react-swc": "^3.5.0",
+    "typescript": "~6.0.3",
+    "vite": "^6.0.5"
+  }
+}

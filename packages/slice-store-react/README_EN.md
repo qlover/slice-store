@@ -1,164 +1,109 @@
-# slice-store-react
+# @qlover/slice-store-react
 
-## Introduction
+[简体中文](./README.md) | English
 
-slice-store helps you write consistent, testable JavaScript applications that run in different environments (client, server, and native).
+> Chinese is the default for this package. Prefer [README.md](./README.md).
+
+React bindings for `@qlover/slice-store`. `useSliceStore` is built on `useSyncExternalStore` and aligns with the store’s microtask batching.
 
 ## Features
 
-- Simple and easy-to-use API
-- Support for complex data structures
-- Efficient state updates
-- Selector functionality
-- Comprehensive type support
+- Matches React 18+ external store subscription
+- Selectors can skip re-renders when the selected value is unchanged
+- Multiple components can share one store
+- TypeScript-friendly
 
-## Installation
+## Install
 
 ```bash
-npm install @qlover/slice-store-react
-# or use yarn
-yarn add @qlover/slice-store-react
+npm install @qlover/slice-store @qlover/slice-store-react
+# or
+pnpm add @qlover/slice-store @qlover/slice-store-react
 ```
 
-## Usage Examples
+Peers: `react` / `react-dom` >= 18.
 
-### Basic Usage
+## Basic usage
 
 ```tsx
 import { SliceStore } from '@qlover/slice-store';
 import { useSliceStore } from '@qlover/slice-store-react';
-import './App.css';
 
-type Value = {
-  count: number;
-};
+type Value = { count: number };
+
 class AppStore extends SliceStore<Value> {
   constructor() {
     super(() => ({ count: 1 }));
   }
 
-  inc = () => {
+  inc = (): void => {
     this.emit({ count: this.state.count + 1 });
   };
 }
 
 const appStore = new AppStore();
 
-function App() {
+export function App() {
   const { count } = useSliceStore(appStore);
 
   return (
-    <>
-      <h1>React Slice Store</h1>
-      <div className="card">
-        <button onClick={appStore.inc}>count is {count}</button>
-      </div>
-    </>
-  );
-}
-
-export default App;
-```
-
-### Using Selectors
-
-```tsx
-import { SliceStore } from '@qlover/slice-store';
-import { useSliceStore } from '@qlover/slice-store-react';
-
-type User = {
-  id: number;
-  name: string;
-  age: number;
-};
-
-class UserStore extends SliceStore<User> {
-  constructor() {
-    super(() => ({ id: 1, name: 'John Doe', age: 30 }));
-  }
-
-  updateAge = (newAge: number) => {
-    this.emit({ ...this.state, age: newAge });
-  };
-}
-
-const userStore = new UserStore();
-
-function UserAge() {
-  const age = useSliceStore(userStore, state => state.age);
-
-  return <div>User age: {age}</div>;
-}
-
-function UserInfo() {
-  const { name, age } = useSliceStore(userStore);
-
-  return (
-    <div>
-      <div>Name: {name}</div>
-      <div>Age: {age}</div>
-      <button onClick={() => userStore.updateAge(age + 1)}>Increment Age</button>
-    </div>
+    <button type="button" onClick={appStore.inc}>
+      count is {count}
+    </button>
   );
 }
 ```
 
-### Multiple Components Listening to the Same State
+## Selectors
+
+Subscribe to a slice; unchanged selected values skip updates:
 
 ```tsx
-import { SliceStore } from '@qlover/slice-store';
-import { useSliceStore } from '@qlover/slice-store-react';
+const age = useSliceStore(userStore, (state) => state.age);
+```
 
-type CounterState = { count: number };
+## With emit batching
 
-class CounterStore extends SliceStore<CounterState> {
-  constructor() {
-    super(() => ({ count: 0 }));
-  }
+Multiple `emit` calls in one event handler notify once, so React typically re-renders once:
 
-  increment = () => {
-    this.emit({ count: this.state.count + 1 });
+```tsx
+class ProfileStore extends SliceStore<{ name: string; age: number }> {
+  updateBoth = (name: string, age: number): void => {
+    this.emit({ ...this.state, name });
+    this.emit({ ...this.state, age });
   };
 }
+```
 
-const counterStore = new CounterStore();
+Prefer `emit((prev) => ...)` for concurrent async writes. See [slice-store docs](../slice-store/README_EN.md).
 
+## Shared store across components
+
+```tsx
 function CounterDisplay() {
   const { count } = useSliceStore(counterStore);
   return <div>Count: {count}</div>;
 }
 
 function IncrementButton() {
-  useSliceStore(counterStore); // Listen to state changes to trigger re-render
-  return <button onClick={counterStore.increment}>Increment</button>;
-}
-
-function App() {
+  useSliceStore(counterStore);
   return (
-    <div>
-      <CounterDisplay />
-      <CounterDisplay /> {/* Two components displaying and updating the count simultaneously */}
-      <IncrementButton />
-    </div>
+    <button type="button" onClick={counterStore.increment}>
+      Increment
+    </button>
   );
 }
 ```
 
-These examples demonstrate the flexibility and power of @qlover/slice-store-react, including basic usage, selector usage, and how multiple components can share and respond to the same state.
+## Playground
 
-## Testing
+From the monorepo root:
 
-Our test suite covers the following aspects:
+```bash
+pnpm dev:playground
+```
 
-- Basic functionality tests
-- Handling of complex data structures
-- Multiple components simultaneously listening to state changes
-- Selector functionality usage
-- Edge case handling (empty arrays, undefined values, etc.)
-
-## Contributing
-
-We welcome issues and pull requests to help improve this project.
+See [examples/playground](../../examples/playground/README.md).
 
 ## License
 

@@ -168,6 +168,37 @@ importers:
         specifier: ^3.0.5
         version: 3.2.4(@types/node@22.17.2)(jiti@2.5.1)(jsdom@26.1.0(supports-color@8.1.1))(supports-color@8.1.1)(terser@5.43.1)(yaml@2.8.1)
 
+  examples/playground:
+    dependencies:
+      '@qlover/slice-store':
+        specifier: workspace:*
+        version: link:../../packages/slice-store
+      '@qlover/slice-store-react':
+        specifier: workspace:*
+        version: link:../../packages/slice-store-react
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.23
+      '@types/react-dom':
+        specifier: ^18.3.5
+        version: 18.3.7(@types/react@18.3.23)
+      '@vitejs/plugin-react-swc':
+        specifier: ^3.5.0
+        version: 3.11.0(@swc/helpers@0.5.17)(vite@6.3.5(@types/node@22.17.2)(jiti@2.5.1)(terser@5.43.1)(yaml@2.8.1))
+      typescript:
+        specifier: ~6.0.3
+        version: 6.0.3
+      vite:
+        specifier: ^6.0.5
+        version: 6.3.5(@types/node@22.17.2)(jiti@2.5.1)(terser@5.43.1)(yaml@2.8.1)
+
   packages/slice-store: {}
 
   packages/slice-store-react:
@@ -5568,7 +5599,7 @@ snapshots:
       '@babel/parser': 7.28.3
       '@babel/template': 7.27.2
       '@babel/types': 7.28.2
-      debug: 4.4.1(supports-color@8.1.1)
+      debug: 4.4.3(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
 

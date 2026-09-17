@@ -41,9 +41,9 @@ describe('SliceStore Constructor and reset method test', () => {
 
     test('Use the class constructor to initialize the object state', () => {
       class TestStateClass {
-        count: number = 10;
-        name: string = 'class test';
-        isActive: boolean = true;
+        public count: number = 10;
+        public name: string = 'class test';
+        public isActive: boolean = true;
       }
 
       const store = new SliceStore(TestStateClass);
@@ -59,7 +59,7 @@ describe('SliceStore Constructor and reset method test', () => {
         super(() => initialCount);
       }
 
-      increment(): void {
+      public increment(): void {
         this.emit(this.state + 1);
       }
     }
@@ -102,8 +102,8 @@ describe('SliceStore Constructor and reset method test', () => {
 
     test('Reset the complex object and observer notification', () => {
       class TodoState {
-        items: string[] = [];
-        loading: boolean = false;
+        public items: string[] = [];
+        public loading: boolean = false;
       }
 
       const todoStore = new SliceStore(TodoState);
@@ -115,12 +115,14 @@ describe('SliceStore Constructor and reset method test', () => {
         items: ['task1', 'task2'],
         loading: true
       });
+      todoStore.flush();
 
       expect(todoStore.state.items).toHaveLength(2);
       expect(todoStore.state.loading).toBe(true);
       expect(mockObserver).toHaveBeenCalledTimes(1);
 
       todoStore.reset();
+      todoStore.flush();
 
       expect(todoStore.state.items).toHaveLength(0);
       expect(todoStore.state.loading).toBe(false);
@@ -133,7 +135,7 @@ describe('SliceStore Constructor and reset method test', () => {
           super(() => initialCount);
         }
 
-        increment(): void {
+        public increment(): void {
           this.emit(this.state + 1);
         }
       }
