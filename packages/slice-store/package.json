@@ -1,6 +1,6 @@
 {
   "name": "@qlover/slice-store",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "A simple and fast state management",
   "type": "module",
   "private": false,

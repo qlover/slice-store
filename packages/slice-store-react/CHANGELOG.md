@@ -1,5 +1,47 @@
 # @qlover/slice-store-react
 
+## 1.5.0
+
+### Minor Changes
+
+#### ✨ Features
+
+- **slice-store:** batch emit notifications by microtask ([3ddef6d](https://github.com/qlover/slice-store/commit/3ddef6dde4c30db0931e7d165d193cee14413e8a)) ([#34](https://github.com/qlover/slice-store/pull/34))
+
+  Defer observer notify to a microtask so consecutive sync emits coalesce, and support updater emit plus flush for sync/async-safe updates.
+
+  Co-authored-by: Cursor <cursoragent@cursor.com>
+
+#### 🐞 Bug Fixes
+
+- **slice-store:** 补充 emit updater 重载并修复 eslint ([5108175](https://github.com/qlover/slice-store/commit/5108175f36e3f5a9ce400ae230d538fcb7d20b91)) ([#34](https://github.com/qlover/slice-store/pull/34))
+
+  为 emit 增加 value/updater 重载，调整 eslint 以支持重载与 queueMicrotask，并应用 lint:fix 补全 public 修饰符。
+
+  Co-authored-by: Cursor <cursoragent@cursor.com>
+
+- **test:** 避免 counter 测试依赖 examples 的 dist 入口 ([8e02289](https://github.com/qlover/slice-store/commit/8e02289e842715ec68dfea812cfb52fc1874e7f1)) ([#34](https://github.com/qlover/slice-store/pull/34))
+
+  CI 在 build 前跑 test，从 playground 引入会解析 package exports 到缺失的 dist；改为包内 fixture，并补充 vitest 源码 alias。
+
+  Co-authored-by: Cursor <cursoragent@cursor.com>
+
+#### 📝 Documentation
+
+- 更新中文默认文档并补充 emit 批处理与 playground 说明 ([37bf488](https://github.com/qlover/slice-store/commit/37bf488ba22f33c23e5135aa159b122a759e74a4)) ([#34](https://github.com/qlover/slice-store/pull/34))
+
+  根 README 与两个包 README 默认中文；同步 English 镜像，修正 observe API，并说明 microtask 批处理、updater、useSliceStore 与示例台。
+
+  Co-authored-by: Cursor <cursoragent@cursor.com>
+
+#### ♻️ Refactors
+
+- **slice-store-react:** 使用 useSyncExternalStore 订阅状态 ([68f4589](https://github.com/qlover/slice-store/commit/68f45896605d0f4b68989fde70ab6953889f8518)) ([#34](https://github.com/qlover/slice-store/pull/34))
+
+  替换 useState+useEffect 实现，与 microtask 批处理对齐，并补充多次 emit / selector 跳过渲染的测试。
+
+  Co-authored-by: Cursor <cursoragent@cursor.com>
+
 ## 1.4.2
 
 ### Patch Changes

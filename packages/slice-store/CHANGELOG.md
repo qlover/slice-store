@@ -1,5 +1,39 @@
 # @qlover/slice-store
 
+## 1.5.0
+
+### Minor Changes
+
+#### ✨ Features
+
+- **slice-store:** batch emit notifications by microtask ([3ddef6d](https://github.com/qlover/slice-store/commit/3ddef6dde4c30db0931e7d165d193cee14413e8a)) ([#34](https://github.com/qlover/slice-store/pull/34))
+
+  Defer observer notify to a microtask so consecutive sync emits coalesce, and support updater emit plus flush for sync/async-safe updates.
+
+  Co-authored-by: Cursor <cursoragent@cursor.com>
+
+#### 🐞 Bug Fixes
+
+- **slice-store:** 补充 emit updater 重载并修复 eslint ([5108175](https://github.com/qlover/slice-store/commit/5108175f36e3f5a9ce400ae230d538fcb7d20b91)) ([#34](https://github.com/qlover/slice-store/pull/34))
+
+  为 emit 增加 value/updater 重载，调整 eslint 以支持重载与 queueMicrotask，并应用 lint:fix 补全 public 修饰符。
+
+  Co-authored-by: Cursor <cursoragent@cursor.com>
+
+- **nx:** 解除 playground 与 packages 的构建循环依赖 ([b6734d8](https://github.com/qlover/slice-store/commit/b6734d8c48b1297b47a154a153b819a6c88dc515)) ([#34](https://github.com/qlover/slice-store/pull/34))
+
+  将 emit-scenarios 收回 package fixtures，playground 仅再导出；Nx build 只跑 packages，示例不参与 run-many。
+
+  Co-authored-by: Cursor <cursoragent@cursor.com>
+
+#### 📝 Documentation
+
+- 更新中文默认文档并补充 emit 批处理与 playground 说明 ([37bf488](https://github.com/qlover/slice-store/commit/37bf488ba22f33c23e5135aa159b122a759e74a4)) ([#34](https://github.com/qlover/slice-store/pull/34))
+
+  根 README 与两个包 README 默认中文；同步 English 镜像，修正 observe API，并说明 microtask 批处理、updater、useSliceStore 与示例台。
+
+  Co-authored-by: Cursor <cursoragent@cursor.com>
+
 ## 1.4.1
 
 ### Patch Changes
