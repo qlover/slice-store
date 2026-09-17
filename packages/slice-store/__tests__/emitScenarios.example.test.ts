@@ -1,8 +1,8 @@
-import { runAllScenarios } from '../example/emit-scenarios';
+import { runAllScenarios } from '../../../examples/playground/src/scenarios/emit-scenarios';
 
 /**
- * Living example: lists every emit update scenario and asserts the expected outcomes.
- * See packages/slice-store/example/emit-scenarios.ts for the scenario implementations.
+ * Living example assertions for emit update scenarios.
+ * Scenario implementations live in examples/playground.
  */
 describe('emit scenarios (example)', () => {
   test('lists and verifies all update situations', async () => {
@@ -39,8 +39,10 @@ describe('emit scenarios (example)', () => {
       loading: false
     });
 
-    expect(byId['parallel-plain-race'].finalState.a === 1 &&
-      byId['parallel-plain-race'].finalState.b === 2).toBe(false);
+    expect(
+      byId['parallel-plain-race'].finalState.a === 1 &&
+        byId['parallel-plain-race'].finalState.b === 2
+    ).toBe(false);
 
     expect(byId['parallel-updater-safe'].finalState).toMatchObject({
       a: 1,

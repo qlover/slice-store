@@ -27,7 +27,6 @@
   },
   "homepage": "https://github.com/qlover/slice-store#readme",
   "scripts": {
-    "dev": "vite",
     "build": "tsup"
   },
   "keywords": [

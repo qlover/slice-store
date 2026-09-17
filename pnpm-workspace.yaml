@@ -1,2 +1,7 @@
 packages:
   - packages/*
+  - examples/*
+allowBuilds:
+  '@swc/core': true
+  esbuild: true
+  nx: true

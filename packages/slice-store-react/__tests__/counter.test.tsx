@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, act } from '@testing-library/react';
-import Counter from '../example/commponents/Counter';
+import Counter from '../../../examples/playground/src/components/Counter';
 
 describe('Counter', () => {
   test('should render and increment/decrement counter', async () => {

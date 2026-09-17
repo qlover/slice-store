@@ -1,13 +1,14 @@
 /**
- * Emit update scenarios — runnable living examples
+ * Emit 更新场景 — 可运行的活文档示例
  *
- * Each scenario documents a real-world update pattern for SliceStore:
- * microtask batching, updater emits, flush, async boundaries, and races.
+ * 每个场景对应 SliceStore 的一类真实更新模式：
+ * microtask 合并、updater emit、flush、跨 await、并行竞态等。
  *
- * Run via vitest: packages/slice-store/__tests__/emitScenarios.example.test.ts
+ * 可在 playground UI 中运行，或通过 vitest：
+ * packages/slice-store/__tests__/emitScenarios.example.test.ts
  */
 
-import { SliceStore } from '../src';
+import { SliceStore } from '@qlover/slice-store';
 
 export type DemoState = {
   a: number;
@@ -43,7 +44,7 @@ async function waitMicrotask(): Promise<void> {
 }
 
 /**
- * 1. Sync consecutive value emits → one notify, final state kept
+ * 1. 同步连续 value emit → 只通知一次，保留最终状态
  */
 export async function scenarioSyncValueBatch(): Promise<ScenarioResult> {
   const store = createDemoStore();
@@ -58,20 +59,21 @@ export async function scenarioSyncValueBatch(): Promise<ScenarioResult> {
 
   return {
     id: 'sync-value-batch',
-    title: 'Sync consecutive value emits',
+    title: '一个方法里连续多次 emit（多字段）',
     description:
-      'Multiple emit(value) calls in the same turn update state immediately but notify once.',
+      '模拟业务方法内连续 emit 改 a、再 emit 改 b：state 立刻到位，观察者只通知一次。',
     notifyCount,
     finalState: { ...store.state },
     notes: [
-      'No need to wrap business code in batch()',
-      'Observers see the final state { a: 1, b: 2 }'
+      '对应真实写法：updateBoth() { emit(...a); emit(...b); }',
+      '业务代码无需包一层 batch()',
+      '观察者看到的是最终状态 { a: 1, b: 2 }'
     ]
   };
 }
 
 /**
- * 2. Sync consecutive updater emits → both fields applied, one notify
+ * 2. 同步连续 updater emit → 两个字段都生效，只通知一次
  */
 export async function scenarioSyncUpdaterBatch(): Promise<ScenarioResult> {
   const store = createDemoStore();
@@ -86,20 +88,21 @@ export async function scenarioSyncUpdaterBatch(): Promise<ScenarioResult> {
 
   return {
     id: 'sync-updater-batch',
-    title: 'Sync consecutive updater emits',
+    title: '一个方法里连续 updater emit（多字段）',
     description:
-      'Updater form reads the latest state at each emit, then one microtask notify.',
+      '同一方法内两次 emit(prev => ...)，每次都基于最新 state，合并后只通知一次。',
     notifyCount,
     finalState: { ...store.state },
     notes: [
-      'Preferred over reading store.state into a local snapshot before emit',
-      'Still one notify for the whole sync turn'
+      '对应真实写法：patch() { emit(s=>({...s,a:1})); emit(s=>({...s,b:2})); }',
+      '比先读 store.state 再快照写入更稳妥',
+      '同一同步轮次仍然只通知一次'
     ]
   };
 }
 
 /**
- * 3. emit(..., { flush: true }) → notify runs synchronously
+ * 3. emit(..., { flush: true }) → 同步立刻通知
  */
 export async function scenarioFlushOption(): Promise<ScenarioResult> {
   const store = createDemoStore();
@@ -112,17 +115,17 @@ export async function scenarioFlushOption(): Promise<ScenarioResult> {
 
   return {
     id: 'flush-option',
-    title: 'Immediate notify with { flush: true }',
+    title: '使用 { flush: true } 立刻通知',
     description:
-      'Use when a subscriber must run in the same stack (tests, sync side effects).',
+      '当订阅者必须在同一调用栈内执行时使用（测试、同步副作用等）。',
     notifyCount,
     finalState: { ...store.state },
-    notes: ['notifyCount is already 1 before awaiting any microtask']
+    notes: ['在等待任何 microtask 之前，notifyCount 已经是 1']
   };
 }
 
 /**
- * 4. store.flush() drains a pending batch
+ * 4. store.flush() 冲刷挂起的批次
  */
 export async function scenarioManualFlush(): Promise<ScenarioResult> {
   const store = createDemoStore();
@@ -138,19 +141,19 @@ export async function scenarioManualFlush(): Promise<ScenarioResult> {
 
   return {
     id: 'manual-flush',
-    title: 'Manual flush()',
-    description: 'Force a pending microtask batch to notify immediately.',
+    title: '手动调用 flush()',
+    description: '强制把挂起的 microtask 批次立刻通知出去。',
     notifyCount,
     finalState: { ...store.state },
     notes: [
-      `notifyCount before flush: ${beforeFlush}`,
-      `notifyCount after flush: ${notifyCount}`
+      `flush 前 notifyCount: ${beforeFlush}`,
+      `flush 后 notifyCount: ${notifyCount}`
     ]
   };
 }
 
 /**
- * 5. Async flow across await → two notifies (loading then data)
+ * 5. 跨 await 的异步流程 → 两次通知（loading 再 data）
  */
 export async function scenarioAsyncAcrossAwait(): Promise<ScenarioResult> {
   const store = createDemoStore();
@@ -168,20 +171,20 @@ export async function scenarioAsyncAcrossAwait(): Promise<ScenarioResult> {
 
   return {
     id: 'async-across-await',
-    title: 'Async updates across await',
+    title: '跨 await 的异步更新',
     description:
-      'Each turn after await is a separate batch — loading and result notify separately.',
+      'await 之后是新的一轮批次——loading 与结果会分别通知。',
     notifyCount,
     finalState: { ...store.state },
     notes: [
-      'This is intentional: UI should see loading=true before the result',
-      'Do not try to merge across await boundaries'
+      '这是预期行为：UI 应先看到 loading=true，再看到结果',
+      '不要试图把 await 两侧的更新强行合并'
     ]
   };
 }
 
 /**
- * 6. Parallel plain emits → race, last write wins (field loss)
+ * 6. 并行普通 emit → 竞态，后写覆盖（字段丢失）
  */
 export async function scenarioParallelPlainRace(): Promise<ScenarioResult> {
   const store = createDemoStore();
@@ -208,22 +211,22 @@ export async function scenarioParallelPlainRace(): Promise<ScenarioResult> {
 
   return {
     id: 'parallel-plain-race',
-    title: 'Parallel plain emits (race)',
+    title: '并行普通 emit（竞态）',
     description:
-      'Both async tasks snapshot the same old state; the later emit overwrites the earlier field.',
+      '两个异步任务都快照了同一份旧 state；后到的 emit 会覆盖先到的字段。',
     notifyCount,
     finalState: { ...store.state },
     notes: [
       bothKept
-        ? 'Unexpected: both fields kept (timing dependent)'
-        : 'Expected: one field lost — last write wins',
-      'Avoid spreading a stale snapshot across concurrent tasks'
+        ? '意外：两个字段都保留了（取决于时序）'
+        : '预期：某个字段丢失——后写覆盖',
+      '不要在并发任务里扩散过期快照'
     ]
   };
 }
 
 /**
- * 7. Parallel updater emits → both fields preserved
+ * 7. 并行 updater emit → 两个字段都保留
  */
 export async function scenarioParallelUpdaterSafe(): Promise<ScenarioResult> {
   const store = createDemoStore();
@@ -246,20 +249,20 @@ export async function scenarioParallelUpdaterSafe(): Promise<ScenarioResult> {
 
   return {
     id: 'parallel-updater-safe',
-    title: 'Parallel updater emits (safe)',
+    title: '并行 updater emit（安全）',
     description:
-      'Each updater reads the latest state at commit time, so concurrent field updates compose.',
+      '每次 updater 在提交时读取最新 state，因此并发字段更新可以正确合并。',
     notifyCount,
     finalState: { ...store.state },
     notes: [
-      'Prefer emit(prev => ...) for concurrent async business logic',
-      'Still subject to microtask batching within each turn'
+      '并发异步业务逻辑优先使用 emit(prev => ...)',
+      '每一轮内部仍然受 microtask 合并约束'
     ]
   };
 }
 
 /**
- * 8. Selector only fires when selected value changes inside a batch
+ * 8. 批次内 selector 仅在选中值变化时触发
  */
 export async function scenarioSelectorInBatch(): Promise<ScenarioResult> {
   const store = new SliceStore<DemoState>(() => ({
@@ -290,14 +293,14 @@ export async function scenarioSelectorInBatch(): Promise<ScenarioResult> {
 
   return {
     id: 'selector-in-batch',
-    title: 'Selector comparison uses batch old state',
+    title: 'Selector 比较基于批次起始旧状态',
     description:
-      'Only selectors whose selected value changed between batch start and end are notified.',
+      '只有选中值在批次起止之间发生变化的 selector 才会被通知。',
     notifyCount: aNotify + bNotify,
     finalState: { ...store.state },
     notes: [
-      `a selector notifies: ${aNotify} (unchanged)`,
-      `b selector notifies: ${bNotify} (0 → 2)`
+      `a selector 通知次数: ${aNotify}（未变化）`,
+      `b selector 通知次数: ${bNotify}（0 → 2）`
     ]
   };
 }
@@ -314,7 +317,7 @@ export const allScenarios = [
 ] as const;
 
 /**
- * Run every scenario and return results (for CLI or tests).
+ * 运行全部场景并返回结果（供 UI 或测试使用）。
  */
 export async function runAllScenarios(): Promise<ScenarioResult[]> {
   const results: ScenarioResult[] = [];
