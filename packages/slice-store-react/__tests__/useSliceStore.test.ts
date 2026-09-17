@@ -10,15 +10,15 @@ class CounterStore extends SliceStore<{
     super(() => ({ count: init, name: 'Counter' }));
   }
 
-  increment = (): void => {
+  public increment = (): void => {
     this.emit({ ...this.state, count: this.state.count + 1 });
   };
 
-  decrement = (): void => {
+  public decrement = (): void => {
     this.emit({ ...this.state, count: this.state.count - 1 });
   };
 
-  changeName = (newName: string): void => {
+  public changeName = (newName: string): void => {
     this.emit({ ...this.state, name: newName });
   };
 }
@@ -92,4 +92,43 @@ test('should use selector to listen to specific state changes', async () => {
   });
 
   expect(result.current).toBe('New Counter');
+});
+
+test('multiple sync emits should cause a single hook update', async () => {
+  const counterStore = new CounterStore(1);
+  let renderCount = 0;
+
+  const { result } = renderHook(() => {
+    renderCount += 1;
+    return useSliceStore(counterStore);
+  });
+
+  const rendersAfterMount = renderCount;
+
+  await actEmit(() => {
+    counterStore.emit({ ...counterStore.state, count: 2 });
+    counterStore.emit({ ...counterStore.state, name: 'Batched' });
+  });
+
+  expect(result.current).toEqual({ count: 2, name: 'Batched' });
+  expect(renderCount - rendersAfterMount).toBe(1);
+});
+
+test('selector should skip re-render when selected value is unchanged', async () => {
+  const counterStore = new CounterStore(1);
+  let renderCount = 0;
+
+  const { result } = renderHook(() => {
+    renderCount += 1;
+    return useSliceStore(counterStore, (state) => state.name);
+  });
+
+  const rendersAfterMount = renderCount;
+
+  await actEmit(() => {
+    counterStore.increment();
+  });
+
+  expect(result.current).toBe('Counter');
+  expect(renderCount - rendersAfterMount).toBe(0);
 });
